@@ -1,0 +1,100 @@
+*********************************CONNEXION A LA BASE DE DONNEES********************************
+
+mysql -u root -p
+enter password: faire entrée
+
+********************Pour voir le bdd déja présentes:**************
+show databases; ( en minuscules comme majuscules, mais plutot Majuscules, pour différncier les commendes du reste, nom de table, types de données etc, ne pas oublier le ";")
+
+*****************pour créer une bdd:*********
+CREATE DATABASE nom_de la_BDD;
+
+*****************selectionner une bdd****************
+USE nom_de_la_BDD;
+
+************creation d' une TABLE dans la bdd**********
+POur cela il faut lui donner différents éléments:
+types de données:
+INT
+VARCHAR
+TEXT
+FLOAT
+
+CREATE TABLE nom_de_table (pour un fruit par exemple:id_fruit INT(3)/ pour que le serveur donne un ID entier a chaque fruit entré, avec max jusqu' a 999/ nom VARCHAR(60, nombre max de caracteres a traiter), origine VARCHAR(50, max 255 pour varchar), calibre INT(1), prix FLOAT, categorie VARCHAR(20))
+
+*****************afficher toutes les tables**************
+SHOW TABLES;
+
+*************insertion infos dans la bdd via la TABLE***********
+INSERT INTO nom_de_TABLE(fruits, ici) (id_fruit, nom, origine, calibre, prix, categorie) VALUES ('1', 'pomme', 'France', '5', '12.50', 'golden');
+
+************pour afficher les élements de la TABLE*****************
+SHOW * FROM fruits;
+
+*********************pour ne selectionner que qlq élements de la catégorie
+SELECT nom, caregorie FROM fruits;
+
+*****************selectionner une catégorie dans une liste ( ici, les prénoms de ceux qui ont les yeux marron)*************************
+SELECT prenom FROM stagiaires WHERE yeux = 'marron';
+ou alors, autre syntaxe pour un rendu différent
+SELECT * FROM stagiaires WHERE yeux = 'marron';
+( va donner tout le tableau, et pas juste la colonne des prénoms)
+
+*****************même liste par ordre alphabetique ( Order By)
+SELECT prenom FROM stagiaires WHERE yeux = 'marron' ORDER BY prenom;
+
+*****************même liste, ordre decroissant des ID ( ORDER BY ... DESC != ASC)
+SELECT prenom FROM stagiaires WHERE yeux = 'marron' ORDER BY id_stagiaire DESC;
+
+*****************liste dont les noms comment par L
+SELECT * FROM stagiaires WHERE prenom  LIKE 'L%';
+se terminent par L
+SELECT * FROM stagiaires WHERE prenom  LIKE '%l';
+contiennent la lettre L
+SELECT * FROM stagiaires WHERE prenom  LIKE '%L%';
+commence par j, contient un a et se termine par n
+SELECT * FROM stagiaires WHERE prenom  LIKE 'J%a%n';
+commence par L, dont le genre est f ( il faut mettre AND, et pas une virgule pour les séparer)
+SELECT prenom FROM stagiaires WHERE genre = 'f' AND  prenom  LIKE 'L%';
+
+*********************supprimer une ligne de TABLE avec une condition (condition obligatoire, sinon, tous les éléments seront supprimés )*****************
+DELETE FROM fruits WHERE caregorie='golden';
+
+**************supprimer tout le contenu de la tABLE**************
+DELETE FROM fruits;
+
+*********************pour changer une donnée de la table***********
+UPDATE fruits SET calibre='7' WHERE id_fruit ='2';
+
+Si on veut changer plusieurs données, c' est le même principe, mais en séparan avec des vigules
+UPDATE fruits SET origine ='Italie', calibre ='3', prix = '3.99' WHERE id_fruit = '2';
+
+*****************pour ajouter une nouvelle catégorie************
+ALTER TABLE fruits ADD commerce VARCHAR (50);
+
+Puis pour lui donner une valeur
+UPDATE fruits SET commerce='supermarche' WHERE id_fruit ='2';
+
+
+
+*******************************opérateurs de comparaison*******************************************
+
+= égal
+<> pas égal
+!= pas égal
+> superieur
+< inferieur
+>= superieur ou égal a
+<= inferieur ou égal a
+IN liste de plusieurs valeurs possibles
+BETWEEN recherche des valeurs comprises dans un interval donné ( utile pour les nombres ou dates)
+LIKE recherche en spécifiant le début, le milieu ou la fin d' un mot
+IS NULL valeur est nulle
+IS NOT NULL valeur n' est pas nulle
+
+**************selectionner des données entre ( BETWEEN) un interval ( focntionne dans une requete utilisant WHERE)
+SELECT * FROM bonbons  WHERE id_bonbon BETWEEN  2 AND 6;
+
+Inversement, on peut utiliser
+SELECT * FROM bonbons  WHERE id_bonbon NOT BETWEEN  3 AND 6;
+pour obtenir les éléments 1 et 2 ( exclu du champs de  a 6)
