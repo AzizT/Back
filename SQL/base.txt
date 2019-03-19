@@ -29,7 +29,7 @@ SHOW TABLES;
 INSERT INTO nom_de_TABLE(fruits, ici) (id_fruit, nom, origine, calibre, prix, categorie) VALUES ('1', 'pomme', 'France', '5', '12.50', 'golden');
 
 ************pour afficher les élements de la TABLE*****************
-SHOW * FROM fruits;
+ * FROM fruits;
 
 *********************pour ne selectionner que qlq élements de la catégorie
 SELECT nom, caregorie FROM fruits;
@@ -46,7 +46,7 @@ SELECT prenom FROM stagiaires WHERE yeux = 'marron' ORDER BY prenom;
 *****************même liste, ordre decroissant des ID ( ORDER BY ... DESC != ASC)
 SELECT prenom FROM stagiaires WHERE yeux = 'marron' ORDER BY id_stagiaire DESC;
 
-*****************liste dont les noms comment par L
+*****************liste dont les noms comment par L*****************************************
 SELECT * FROM stagiaires WHERE prenom  LIKE 'L%';
 se terminent par L
 SELECT * FROM stagiaires WHERE prenom  LIKE '%l';
@@ -56,6 +56,32 @@ commence par j, contient un a et se termine par n
 SELECT * FROM stagiaires WHERE prenom  LIKE 'J%a%n';
 commence par L, dont le genre est f ( il faut mettre AND, et pas une virgule pour les séparer)
 SELECT prenom FROM stagiaires WHERE genre = 'f' AND  prenom  LIKE 'L%';
+
+*************************va afficher de ma liste, juste deux éléments (LIMIT)*************************************************
+SELECT * FROM stagiaires LIMIT 2;
+Va afficher de ma liste, deux éléments (2), mais en sautant la ligne(1)
+SELECT * FROM stagiaires LIMIT 1,2;
+Va afficher de ma liste, 4 éléments (4), mais en supprimant la ligne 1 (1)
+SELECT * FROM stagiaires LIMIT 1,4;
++--------------+---------+--------+-------+
+| id_stagiaire | prenom  | yeux   | genre |
++--------------+---------+--------+-------+
+|            2 | Layla   | marron | f     |
+|            3 | Luc     | marron | h     |
+|            4 | Sabuj   | marron | h     |
+|            5 | Mohamed | marron | h     |
++--------------+---------+--------+-------+
+
+va en selectionner 4, en supprimant les trois premieres(3)
+SELECT * FROM stagiaires LIMIT 3,4;
++--------------+-----------+--------+-------+
+| id_stagiaire | prenom    | yeux   | genre |
++--------------+-----------+--------+-------+
+|            4 | Sabuj     | marron | h     |
+|            5 | Mohamed   | marron | h     |
+|            6 | Johnathan | bleu   | h     |
+|            7 | Arnaud    | marron | h     |
++--------------+-----------+--------+-------+
 
 *********************supprimer une ligne de TABLE avec une condition (condition obligatoire, sinon, tous les éléments seront supprimés )*****************
 DELETE FROM fruits WHERE caregorie='golden';
