@@ -19,8 +19,31 @@ INT
 VARCHAR
 TEXT
 FLOAT
+DATE => aaaa-mm-jj********alternative a DATE: 
+                                            DATETIME => aaaa-mm-jj-hh-mm-ss (ajout des heures, minutes et secondes)
+
+                                            TIMESTAMP => les secondes écoulées depuis 1970 (depuis le 01-01-1970, date historique de la naissance d' Internet)
+
+                                            TIME => Le type TIME  est un peu plus compliqué, puisqu'il permet non seulement de stocker une heure précise, mais aussi un intervalle de temps. On n'est donc pas limité à 24 heures, et il est même possible de stocker un nombre de jours ou un intervalle négatif. Comme dans DATETIME, il faut d'abord donner l'heure, puis les minutes, puis les secondes, chaque partie pouvant être séparée des autres par le caractère :. Dans le cas où l'on précise également un nombre de jours, alors les jours sont en premier et séparés du reste par une espace. Exemples :
+
+                                            'HH:MM:SS'
+
+                                            'HHH:MM:SS'
+
+                                            'MM:SS'
+
+                                            'J HH:MM:SS'
+
+                                            'HHMMSS'
+
+                                            HHMMSS  (nombre)
+
+                                            YEAR => seulement l' année (aaaa)
 
 CREATE TABLE nom_de_table (pour un fruit par exemple:id_fruit INT(3)/ pour que le serveur donne un ID entier a chaque fruit entré, avec max jusqu' a 999/ nom VARCHAR(60, nombre max de caracteres a traiter), origine VARCHAR(50, max 255 pour varchar), calibre INT(1), prix FLOAT, categorie VARCHAR(20))
+
+id -> INT PRIMARY KEY AUTO_INCREMENT NOT NULL
+permet de ne pas donner une valeur a l' ID. Le serveur va s' en charger a la creation de chaque nouvel article, en l' auto incrementant
 
 *****************afficher toutes les tables**************
 SHOW TABLES;
@@ -28,25 +51,120 @@ SHOW TABLES;
 *************insertion infos dans la bdd via la TABLE***********
 INSERT INTO nom_de_TABLE(fruits, ici) (id_fruit, nom, origine, calibre, prix, categorie) VALUES ('1', 'pomme', 'France', '5', '12.50', 'golden');
 
-************pour afficher les élements de la TABLE*****************
+************************************************************************************************************************************************************************
+
+                                                       ************pour afficher les élements de la TABLE*****************
  * FROM fruits;
 
-*********************pour ne selectionner que qlq élements de la catégorie
+                                  ***************************additionner les éléments d' une même catégorie (requete SUM)***************
+ SELECT SUM(nb_pers) FROM chambres;
+ +--------------+
+| SUM(nb_pers) |
++--------------+
+|           23 |
++--------------+
+
+                                   *********************pour avoir ce même total, mais avec un intitulé moins barbare /requete AS***************
+SELECT SUM(nb_pers) as total FROM chambres;
++-------+
+| total |
++-------+
+|    23 |
++-------+
+
+                             *********************************************pour diviser et avoir une moyenne/ requete AVG***********************
+SELECT AVG(prix) FROM chambres;
+
+
+permet d' avoir un prix moyen, par personnes, pourl es chambres ayant une tv
+SELECT AVG(prix/nb_pers) FROM chambres WHERE equipement = 'televiseur';
++-------------------+
+| AVG(prix/nb_pers) |
++-------------------+
+| 80.56190418061756 |
++-------------------+
+
+
+                            *******************avoir numero chambres et numero clients de ceux qui ont reservé le 02-03-3019************************
+SELECT num_chambre, num_client FROM reservations WHERE date_arrivee = '2019-03-02';
++-------------+------------+
+| num_chambre | num_client |
++-------------+------------+
+|           2 |          3 |
+|           7 |          9 |
++-------------+------------+
+
+                            *****************pour selectionner le numero de chambre dont le prix est compris entre x et y, avec un jacuzzi**************
+
+SELECT num_chambre FROM chambres WHERE confort LIKE '%Jacuzzi%' AND prix BETWEEN 150 AND 450;
++-------------+
+| num_chambre |
++-------------+
+|           2 |
+|           4 |
+|           7 |
+|           8 |
++-------------+
+
+Autre technique pour le même résultat
+
+SELECT num_chambre FROM chambres WHERE confort LIKE '%Jacuzzi%' AND prix >= 150 <=450;
++-------------+
+| num_chambre |
++-------------+
+|           2 |
+|           3 |
+|           4 |
+|           7 |
+|           8 |
++-------------+
+
+
+                                **********************affiche nom, prenom et adresse des clients ou la lettre N apparait dans le nom************
+SELECT nom, prenom, adresse FROM clients WHERE nom LIKE '%n%';
++-----------+---------+--------------+
+| nom       | prenom  | adresse      |
++-----------+---------+--------------+
+| Chabane   | Djamila | Vitry/ Seine |
+| Rouini    | Sarah   | Paris IV     |
+| Vanicatte | Nelson  | Vitry/ Seine |
++-----------+---------+--------------+
+variante avec le nom qui commence par A
+
+SELECT nom, prenom, adresse FROM clients WHERE nom LIKE 'a%';
++--------+--------+-------------+
+| nom    | prenom | adresse     |
++--------+--------+-------------+
+| Amara  | Nassim | Vitry/Seine |
+| Aribot | Yannis | Créteil     |
++--------+--------+-------------+
+
+                                *************************pour afficher le nombre de chambres dont le prix varie entre 100 et 180/ requete count******************
+SELECT count(id_chambre) FROM chambres WHERE prix BETWEEN 100 AND 180;
++-------------------+
+| count(id_chambre) |
++-------------------+
+|                 2 |
++-------------------+
+fonctionne de la même maniere avec count(num_chambre)
+
+
+                                            *********************pour ne selectionner que qlq élements de la catégorie***************************
 SELECT nom, caregorie FROM fruits;
 
-*****************selectionner une catégorie dans une liste ( ici, les prénoms de ceux qui ont les yeux marron)*************************
+                                  *****************selectionner une catégorie dans une liste ( ici, les prénoms de ceux qui ont les yeux marron)*************************
 SELECT prenom FROM stagiaires WHERE yeux = 'marron';
 ou alors, autre syntaxe pour un rendu différent
 SELECT * FROM stagiaires WHERE yeux = 'marron';
 ( va donner tout le tableau, et pas juste la colonne des prénoms)
 
-*****************même liste par ordre alphabetique ( Order By)
+                                                            *****************même liste par ordre alphabetique ( Order By)************************
 SELECT prenom FROM stagiaires WHERE yeux = 'marron' ORDER BY prenom;
 
-*****************même liste, ordre decroissant des ID ( ORDER BY ... DESC != ASC)
+                                                     *****************même liste, ordre decroissant des ID ( ORDER BY ... DESC != ASC)*********************
 SELECT prenom FROM stagiaires WHERE yeux = 'marron' ORDER BY id_stagiaire DESC;
 
-*****************liste dont les noms comment par L*****************************************
+                                             *****************liste dont les noms comment par L*****************************************
 SELECT * FROM stagiaires WHERE prenom  LIKE 'L%';
 se terminent par L
 SELECT * FROM stagiaires WHERE prenom  LIKE '%l';
@@ -89,10 +207,10 @@ DELETE FROM fruits WHERE caregorie='golden';
 **************supprimer tout le contenu de la tABLE**************
 DELETE FROM fruits;
 
-*********************pour changer une donnée de la table***********
+*********************pour changer une donnée de la table ***********
 UPDATE fruits SET calibre='7' WHERE id_fruit ='2';
 
-Si on veut changer plusieurs données, c' est le même principe, mais en séparan avec des vigules
+Si on veut changer plusieurs données, c' est le même principe, mais en séparant avec des virgules
 UPDATE fruits SET origine ='Italie', calibre ='3', prix = '3.99' WHERE id_fruit = '2';
 
 *****************pour ajouter une nouvelle catégorie************
@@ -100,6 +218,19 @@ ALTER TABLE fruits ADD commerce VARCHAR (50);
 
 Puis pour lui donner une valeur
 UPDATE fruits SET commerce='supermarche' WHERE id_fruit ='2';
+
+**********************************requete between**********************
+SELECT *
+FROM table
+WHERE nom_colonne BETWEEN 'valeur1' AND 'valeur2'
+
+Exemple:
+SELECT * FROM voitures WHERE date_vente BETWEEN '2019-02-02' AND '2019-02-27';
+
+*************************pour changer le nom générique d' une colonne (changer INDICE => nom de colonne )*************
+ALTER TABLE nom_de_la_table CHANGE ancien_nom_colonne nouveau_nom_colonne VARCHAR(valeur);
+Exemple:
+ALTER TABLE voitures CHANGE date date_achat DATE;
 
 
 
@@ -124,3 +255,54 @@ SELECT * FROM bonbons  WHERE id_bonbon BETWEEN  2 AND 6;
 Inversement, on peut utiliser
 SELECT * FROM bonbons  WHERE id_bonbon NOT BETWEEN  3 AND 6;
 pour obtenir les éléments 1 et 2 ( exclu du champs de  a 6)
+
+
+**************************************************************************************************************************************************************************
+                                *********************pour faire une jointure****************************
+
+On lui fait faire une jointure entre le num_client de c ( pour table clients) et le num_client de r ( pour reservations) pourqu' il puisse faire la relation entre les deux Tables ( ici on lui demande d' afficher les clients qui n' ont pas encore fixé de date de départ....aucun)
+SELECT nom FROM clients AS c, reservations AS r WHERE date_depart IS NULL AND c.num_client = r.num_client;
+Empty set;
+
+
+                                            *****************utilité du inner join*****************
+
+INNER JOIN permet de creer un tableau commun a deux table a partir d' un élément commun qui va permettre de faire la réunification
+La méthode INNER JOIN permet de créer un tableau. La méthode AS ( du dessus) permet de faire transiter l' information via une passerelle                                           
+SELECT * FROM clients AS c INNER JOIN reservations AS r WHERE c.num_client = r.num_client;
++-----------+------------+-----------+------------+-----------------+---------+------------+-------------+--------------+-------------+
+| id_client | num_client | nom       | prenom     | adresse         | id_resa | num_client | num_chambre | date_arrivee | date_depart |
++-----------+------------+-----------+------------+-----------------+---------+------------+-------------+--------------+-------------+
+|         1 |          1 | Ba        | Auguste    | Boissy St leger |       1 |          1 |           3 | 2019-03-04   | 2019-03-09  |
+|         2 |          2 | Chabane   | Djamila    | Vitry/ Seine    |       2 |          2 |           3 | 2019-03-11   | 2019-03-23  |
+|         3 |          3 | Amara     | Nassim     | Vitry/Seine     |       3 |          3 |           2 | 2019-03-02   | 2019-03-08  |
+|         4 |          4 | Aribot    | Yannis     | Créteil         |       4 |          4 |           2 | 2019-03-18   | 2019-03-30  |
+|         5 |          5 | Baillet   | Sylvain    | Champigny       |       5 |          5 |           1 | 2019-03-08   | 2019-03-18  |
+|         6 |          6 | Colussi   | Iuliia     | Vitry/ Seine    |       6 |          6 |           4 | 2019-03-04   | 2019-03-28  |
+|         7 |          7 | Piot      | Aurelia    | Vitry/ Seine    |       7 |          7 |           5 | 2019-03-06   | 2019-03-09  |
+|         8 |          8 | Rabhi     | Bahaeddine | La Chapelle     |       8 |          8 |           6 | 2019-03-10   | 2019-03-30  |
+|         9 |          9 | Rouini    | Sarah      | Paris IV        |       9 |          9 |           7 | 2019-03-02   | 2019-03-14  |
+|        10 |         10 | Tobbal    | Aziz       | Créteil         |      10 |         10 |           8 | 2019-03-05   | 2019-03-11  |
+|        11 |         11 | Vanicatte | Nelson     | Vitry/ Seine    |      11 |         11 |           9 | 2019-03-16   | 2019-03-23  |
+|        12 |         12 | Zarouel   | Touhami    | Vitry/ Seine    |      12 |         12 |          10 | 2019-03-07   | 2019-03-26  |
++-----------+------------+-----------+------------+-----------------+---------+------------+-------------+--------------+-------------+
+
+Autre syntaxe
+
+SELECT * FROM clients INNER JOIN reservations ON clients.num_client = reservations.num_client;
++-----------+------------+-----------+------------+-----------------+---------+------------+-------------+--------------+-------------+
+| id_client | num_client | nom       | prenom     | adresse         | id_resa | num_client | num_chambre | date_arrivee | date_depart |
++-----------+------------+-----------+------------+-----------------+---------+------------+-------------+--------------+-------------+
+|         1 |          1 | Ba        | Auguste    | Boissy St leger |       1 |          1 |           3 | 2019-03-04   | 2019-03-09  |
+|         2 |          2 | Chabane   | Djamila    | Vitry/ Seine    |       2 |          2 |           3 | 2019-03-11   | 2019-03-23  |
+|         3 |          3 | Amara     | Nassim     | Vitry/Seine     |       3 |          3 |           2 | 2019-03-02   | 2019-03-08  |
+|         4 |          4 | Aribot    | Yannis     | Créteil         |       4 |          4 |           2 | 2019-03-18   | 2019-03-30  |
+|         5 |          5 | Baillet   | Sylvain    | Champigny       |       5 |          5 |           1 | 2019-03-08   | 2019-03-18  |
+|         6 |          6 | Colussi   | Iuliia     | Vitry/ Seine    |       6 |          6 |           4 | 2019-03-04   | 2019-03-28  |
+|         7 |          7 | Piot      | Aurelia    | Vitry/ Seine    |       7 |          7 |           5 | 2019-03-06   | 2019-03-09  |
+|         8 |          8 | Rabhi     | Bahaeddine | La Chapelle     |       8 |          8 |           6 | 2019-03-10   | 2019-03-30  |
+|         9 |          9 | Rouini    | Sarah      | Paris IV        |       9 |          9 |           7 | 2019-03-02   | 2019-03-14  |
+|        10 |         10 | Tobbal    | Aziz       | Créteil         |      10 |         10 |           8 | 2019-03-05   | 2019-03-11  |
+|        11 |         11 | Vanicatte | Nelson     | Vitry/ Seine    |      11 |         11 |           9 | 2019-03-16   | 2019-03-23  |
+|        12 |         12 | Zarouel   | Touhami    | Vitry/ Seine    |      12 |         12 |          10 | 2019-03-07   | 2019-03-26  |
++-----------+------------+-----------+------------+-----------------+---------+------------+-------------+--------------+-------------+
