@@ -54,7 +54,7 @@ INSERT INTO nom_de_TABLE(fruits, ici) (id_fruit, nom, origine, calibre, prix, ca
 ************************************************************************************************************************************************************************
 
                                                        ************pour afficher les élements de la TABLE*****************
- * FROM fruits;
+ SELECT * FROM fruits;
 
                                   ***************************additionner les éléments d' une même catégorie (requete SUM)***************
  SELECT SUM(nb_pers) FROM chambres;
