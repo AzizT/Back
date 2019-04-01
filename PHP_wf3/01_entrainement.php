@@ -46,7 +46,7 @@
         echo 'Ni Hao';
         // ceci est un commentaire sur une seule ligne
         # idem, une seule ligne
-        echo 'Sabah El Kheir';
+        echo ' Sabah El Kheir';
         /*              commentaire sur 
                              plusieurs lignes
         */
@@ -99,7 +99,7 @@
         // echo 'aujourd' ui'
         // pbs ci dessus car usage des simple quotes, en conflit avec l' apostrophe de 'hui...on peut mettre des double quote, ou un anti slash pour que le navigateur interprete ça bien
 
-        echo $x, " doit précéder ", $y, " pour signifier; bonjour en Pin Yin";
+        echo $x, " doit précéder ", $y, " pour signifier: bonjour en Pin Yin";
         // le point, comme ci dessus la virgule, servent a concaténer
         echo '<br>';
 
@@ -254,7 +254,7 @@
         $varB = '1';
         if ($varA == $varB) {
             echo "il s' agit de la même valeur<br>";
-            // Ca fonctionne avec le double égalm, mais pas le triple, car si la valeur est la même, le type non ( INTEGER vs STRING)...voir plus haut
+            // Ca fonctionne avec le double égal, mais pas le triple, car si la valeur est la même, le type non ( INTEGER vs STRING)...voir plus haut
         }
 
         echo '<hr> <h2 class="display-4 text-center">Condition SWITCH</h2><hr>';
@@ -429,21 +429,22 @@
             else
                 $degre = "degré";
 
-            if($saison =="printemps")
-            $art = "au";
+            if ($saison == "printemps")
+                $art = "au";
             else
-            $art = "en";
+                $art = "en";
             return " nous sommes $art $saison et il fait $temperature $degre <br>";
         }
         echo exoMeteo('été', 2);
         echo exoMeteo('automne', -2);
         echo exoMeteo('hiver', 0);
         echo exoMeteo('printemps', 0);
-        
+
         // espace global et local
 
-        function jourSemaine(){
-            $jour ='jeudi';
+        function jourSemaine()
+        {
+            $jour = 'jeudi';
             return $jour;
             echo 'Salut';
         }
@@ -455,14 +456,296 @@
         // ***********************************************
 
         $pays = "France";
-        function affichagePays(){
+        function affichagePays()
+        {
             global $pays;
             return $pays;
         }
         echo affichagePays();
         // la terminologie "global" permet d' importer une variable de l' espace global vers l' espace local, sinon, UNDEFINED
 
+        echo '<hr> <h2 class="display-4 text-center">Structure itérative: les boucles</h2><hr>';
+
+        // Boucle While
+        $i = 0;
+        while ($i < 5) {
+            echo "$i---";
+            $i++;
+        }
+        echo '<br>';
+
+        // exo => faire en sorte que pour le dernier tour de boucle les tirets n' existent plus
+
+        /* Mon Travail
+        $i = 0;
+        while ($i < 4) {
+            echo "$i---";
+            $i++;
+        }
+        if ($i < 3) {
+            echo "$i---";
+        }else{
+            echo "$i";
+        } */
+        // correction du formateur
+        $j = 0;
+        while ($j < 5) {
+            if ($j == 4)
+                echo $j;
+            else
+                // pas ouvrir une seconde accolade pour le else, dans la même que le if
+                echo "$j---";
+            $j++;
+        }
+        echo '<br>';
+
+        // la boucle for
+        // même principe que la while, sauf que tout va se passer entre les parentheses ( initialisation, condition d' entrée, incrémentation)
+        for ($j = 0; $j < 16; $j++) {
+            echo "$j-";
+        }
+
+        echo '<br>';
+        // exo afficher un selecteur de 30 options avec une boucle
+
+        echo '<hr><select>';
+        for ($v = 1; $v < 31; $v++) {
+            echo "<option>$v</option>";
+        }
+        echo '</select>';
+        // echo du select fermant obligatoire pour la suite du code
+
+        echo '<br>';
+        // exo: faire une boucle qui affiche de 0 a 9 sur la même ligne ( 10 tours)
+
+        $a = 0;
+        while ($a < 10) {
+            echo "$a-";
+            $a++;
+        }
+        echo '<br>';
+        // exo: faire une boucle qui affiche de 0 a 9 sur la même ligne, dans un tableau
+        /*Mon travail
+        echo '<tr><td>';
+
+        for ( $b = 0; $b <10; $b++){
+            echo "<td> $b |</td>";
+        }
+        
+        echo '</td></tr>'; */
+
+        // correction du formateur
+        echo '<table class="table table-bordered text-center"><tr>';
+
+        for ($b = 0; $b < 10; $b++) {
+            echo "<td> $b</td>";
+        }
+
+        echo '</tr></table><hr>';
+
+        echo '<br>';
+
+        // faire la même chose, de 0 a 99, sur  10 lignes, mais sans faire 10 boucles ( principe de la boucle imbriquée)
+
+
+        echo '<table class="table table-bordered text-center"><tr>';
+
+        // mon travail
+        // for ($c = 0; $c < 10; $c++)
+        //     for($d = 0; $d <10; $d++) {
+        //     echo "<td> $c</td>";
+        // }
+
+        // echo '</tr></table><hr>';
+
+        // echo '<br>';
+
+        // correction
+        $compteur = 0;
+        // le compteur qui va s' incruster dans les td
+        echo '<table class="table table-bordered text-center">';
+
+        for ($ligne = 0; $ligne < 10; $ligne++)
+            // la boucle qui va créer les lignes ( 10 tel que demandé)
+            {
+                echo '<tr>';
+                for ($cellule = 0; $cellule < 10; $cellule++)
+                    // la boucle qui va créer les cellules - colonnes. A chaque fois qu' on crée dix colonnes, on crée une nouvelle ligne etc...
+                    {
+                        echo "<td>$compteur</td>";
+                        // on rappelle ici la variable compteur pour remplir les cellules (td)de notre tableau
+                        $compteur++;
+                        // le compteur va aller jusqu' a 99, ne va pas se réinitialiser, car on ne l'a pas borduré comme la création de ligne ou de colonnes (<10)
+                    }
+
+                echo '</tr>';
+            }
+
+        echo '</table>';
+
+        echo '<hr> <h2 class="display-4 text-center">Tableau de données Array</h2><hr>';
+
+        // un tableau ARRAY est declaré un peu comme une variable améliorée car on ne conserve pas qu' une, mais un ensemble de valeurs
+
+        $liste = array("Grégory", "Aziz", "Nassim", "Sylvain", "Nelson");
+        // deux manières de créer un tableau ( en declarant un array ou en mettant des crochets)
+        $liste = ["Grégory", "Aziz", "Nassim", "Sylvain", "Nelson"];
+        // echo $liste;
+        // générer une erreur car on ne peut afficher un array avec un simple écho
+
+        // var_dump($liste);
+        // permet d' afficher les éléments du array; leur type, length etc....
+
+        echo '<pre>';
+        var_dump($liste);
+        echo '</pre>';
+
+        echo '<pre>';
+        print_r($liste);
+        echo '</pre>';
+        // la balise <pre>nt permet d' afficher des infos meiux présentées, avec d' autres infos, tel que l' indice
+        // elle permet de formater la sortie du print_r et du var_dump
+        // ces intructions d' affichage améliorées permettent de consulter et d' afficher les données d' un tableau, d' une variable, d' un objet etc....
+
+        /*
+        ---------------------------
+        | Indice    | valeur      |
+        ---------------------------
+        |      00   | Grégory     |
+        ---------------------------
+        |      01   | Aziz        |
+        ---------------------------
+        |     02    | Nassim      |
+        ---------------------------
+        |     03    | Sylvain     |
+        ---------------------------
+        |     04    | Nelson      |
+        ---------------------------
+        */
+
+        // exo: tenter de sortir nassim en passant par le tableau de données ARRAY sans ecrire echo nassim
+        // même technique qu' en JS
+        echo $liste[2];
+        '<br>';
+
+        echo '<hr> <h2 class="display-4 text-center">Boucle foreach pour les tableaux de données ARRAY</h2><hr>';
+
+        $tab[] = "France";
+        // encore une autre manière de créer un tableau => les crochets vides qui permettent de générer des indices numériques
+        $tab[] = "Angleterre";
+        $tab[] = "Espagne";
+        $tab[] = "Italie";
+        $tab[] = "Portugal";
+
+        echo '<pre>';
+        print_r($tab);
+        echo '</pre>';
+
+        // la boucle foreach permet de passer en revue tous les éléments d' un tableau ( mais aussi des objets...nous verrons cela un peu après)
+
+        //     ---------------------------
+        //     | Indice    | valeur      |
+        //     ---------------------------
+        //     |     00    | France      |
+        //     ---------------------------
+        //     |     01    | Angleterre  |
+        //     ---------------------------
+        //     |     02    | Espagne     |
+        //     ---------------------------
+        //     |     03    | Italie      |
+        //     ---------------------------
+        //     |     04    | Portugal    |
+        //     ---------------------------
+
+        foreach ($tab as $value)
+            // la boucle foreach est un moyen simple de passer en revue un tableau de données array
+            //  as fait partie du langage et est obligatoire. $value est une variable de reception que nous nommons. Elle receptionne une valeur du tableau par tour de boucle
+            {
+                echo "$value<br>";
+            }
+        // value va parcourir les valeurs du tableau, et ne transmettre que cela => la valeur, sans l'indice, affichable pour l' utilisateur ( et non pas avec un array comme avant)
+
+        // ---------------------------------------------------------------------------------------------------------
+
+        // on peut aussi afficher deux éléments
+
+        foreach ($tab as $key => $value) {
+            echo "$key équivaut à $value<br>";
+        }
+        // les noms de variables utilisées ici ne sont pas obligatoires. On pourrait les appeler comme on veut $aziz etc...LEUR DECLARATION SE FAIT AU MOMENT OU ON LES APPELLE. PAS BESOIN DE LES DECLARER AU PREALABLE OU D' UTILISER UN NOM PREDEFINI
+        // la fleche => est par contre obligatoire dans la boucle foreach ( mais pas dans le echo)
+
         ?>
+
+        <hr>
+        <!-- autre possibilité d' ecriture -->
+
+        <?php foreach ($tab as $key => $value) : ?>
+
+        <?= $key; ?> => <?= $value; ?> <br>
+
+        <?php endforeach; ?>
+        <br>
+        <?php 
+
+        $perso = array("m" => "Mario", "l" => "Luigi", "a" => "Aziz", "n" => "Nassim");
+        echo '<pre>';
+        print_r($perso);
+        echo '</pre>';
+
+        echo "taille du tableau : " . count($perso) . '<br>';
+        echo "taille du tableau : " . sizeof($perso) . '<br>';
+        //  sizeof et count retournent la taille d' un tableau ARRAY => combien d' éléments a l' intérieur. Pas de différnece entre les deux méthodes
+
+        echo implode("-", $perso);
+        // implode permet l' extration des données, en mettant un séparateur
+        //  c'est une fonction prédéfinie qui rassemble les éléments d' un tableau en une chaine de caracteres, séparées par un caractere
+
+        echo '<hr> <h2 class="display-4 text-center">Tableau ARRAY multidimensionnel</h2><hr>';
+
+        // tableau contenu dans un autre tableau => multidimensionnel
+
+        $tab_multi = array(
+            0 => array("nom" => "Chadli", "salaire" => 100000),
+            1 => array("nom" => "Mobutu", "salaire" => 100000000),
+            2 => array("nom" => "Amin Dada", "salaire" => 10000000000000)
+        );
+        echo '<pre>';
+        print_r($tab_multi);
+        echo '</pre>';
+
+        // exo tenter de sortir "Chadli" en passant par le tableau multi sans faire un echo Chadli
+
+        echo $tab_multi[0]['nom'] . '<hr>';
+
+        // exo afficher l' ensemble du tableau multi a l' aide d' une boucle foreach
+        foreach ($tab_multi as $key => $tab)
+            // ici ce key représentera l' indice ( 0 et 1) et le tab le array ( chacun des deux tableaux)
+            {
+                echo '<div class="col-md-3 offset-md-5 alert alert-success text-dark mx-auto text-center">';
+                foreach ($tab as $key2 => $value) {
+                    // on rappelle notre $tab, car il faut linker le foreach dans le foreach
+                    echo "$key2 => $value <br>";
+                }
+                echo '</div>';
+            }
+        echo '<hr>';
+
+        // ********************************************************************************************************
+
+        for ($i = 0; $i < count($tab_multi); $i++) {
+            // la boucle for permet de tourner autant de fois qu' il y a de lignes dans le tableau multi, donc 3 boucles dans ce cas précis
+            // on se sert de la variable $i de la boucle for pour aller crocheter a chaque indice du tableau multi et parcourir les données
+                echo '<div class="col-md-3 offset-md-5 alert alert-warning text-dark mx-auto text-center">';
+                foreach ($tab_multi[$i] as $key => $value) {
+                        echo "$key => $value <br>";
+                    }
+                echo '</div>';
+            }
+
+
+        ?>
+
 
     </div>
 
@@ -472,8 +755,8 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea 6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
 
 </body>
 
-</html> 
+</html>
