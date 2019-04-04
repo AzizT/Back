@@ -96,4 +96,4 @@ if ($_POST) {
     </script>
 </body>
 
-</htm l>
+</html>
