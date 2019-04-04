@@ -245,7 +245,7 @@
         // XOR, condition exclusive, autorise juste une seule condition vraie. Si les deux ( ou encore plus) sont vraies, ou toutes fausses, alors XOR ne peut s' appliquer, et donc FALSE
 
         // forme contractée: 2éme possibilité d' ecriture
-        echo ($a = 10) ? " A est égal a 10 <br>" : "A n' est pas égal a 10<br>";
+        echo ($a = 10) ?" A est égal a 10 <br>" : "A n' est pas égal a 10<br>";
         // condition ternaire: le ? remplace le IF, et les deux points le "ELSE"
 
         //  comparaison
@@ -682,69 +682,91 @@
 
         <?php foreach ($tab as $key => $value) : ?>
 
-        <?= $key; ?> => <?= $value; ?> <br>
+            <?= $key; ?> => <?= $value; ?> <br>
 
-        <?php endforeach; ?>
+                                            <?php endforeach; ?>
         <br>
-        <?php 
+        <?php
 
-        $perso = array("m" => "Mario", "l" => "Luigi", "a" => "Aziz", "n" => "Nassim");
-        echo '<pre>';
-        print_r($perso);
-        echo '</pre>';
+                    $perso = array("m" => "Mario", "l" => "Luigi", "a" => "Aziz", "n" => "Nassim");
+                    echo '<pre>';
+                    print_r($perso);
+                    echo '</pre>';
 
-        echo "taille du tableau : " . count($perso) . '<br>';
-        echo "taille du tableau : " . sizeof($perso) . '<br>';
-        //  sizeof et count retournent la taille d' un tableau ARRAY => combien d' éléments a l' intérieur. Pas de différnece entre les deux méthodes
+                    echo "taille du tableau : " . count($perso) . '<br>';
+                    echo "taille du tableau : " . sizeof($perso) . '<br>';
+                    //  sizeof et count retournent la taille d' un tableau ARRAY => combien d' éléments a l' intérieur. Pas de différnece entre les deux méthodes
 
-        echo implode("-", $perso);
-        // implode permet l' extration des données, en mettant un séparateur
-        //  c'est une fonction prédéfinie qui rassemble les éléments d' un tableau en une chaine de caracteres, séparées par un caractere
+                    echo implode("-", $perso);
+                    // implode permet l' extration des données, en mettant un séparateur
+                    //  c'est une fonction prédéfinie qui rassemble les éléments d' un tableau en une chaine de caracteres, séparées par un caractere
 
-        echo '<hr> <h2 class="display-4 text-center">Tableau ARRAY multidimensionnel</h2><hr>';
+                    echo '<hr> <h2 class="display-4 text-center">Tableau ARRAY multidimensionnel</h2><hr>';
 
-        // tableau contenu dans un autre tableau => multidimensionnel
+                    // tableau contenu dans un autre tableau => multidimensionnel
 
-        $tab_multi = array(
-            0 => array("nom" => "Chadli", "salaire" => 100000),
-            1 => array("nom" => "Mobutu", "salaire" => 100000000),
-            2 => array("nom" => "Amin Dada", "salaire" => 10000000000000)
-        );
-        echo '<pre>';
-        print_r($tab_multi);
-        echo '</pre>';
+                    $tab_multi = array(
+                        0 => array("nom" => "Chadli", "salaire" => 100000),
+                        1 => array("nom" => "Mobutu", "salaire" => 100000000),
+                        2 => array("nom" => "Amin Dada", "salaire" => 10000000000000)
+                    );
+                    echo '<pre>';
+                    print_r($tab_multi);
+                    echo '</pre>';
 
-        // exo tenter de sortir "Chadli" en passant par le tableau multi sans faire un echo Chadli
+                    // exo tenter de sortir "Chadli" en passant par le tableau multi sans faire un echo Chadli
 
-        echo $tab_multi[0]['nom'] . '<hr>';
+                    echo $tab_multi[0]['nom'] . '<hr>';
 
-        // exo afficher l' ensemble du tableau multi a l' aide d' une boucle foreach
-        foreach ($tab_multi as $key => $tab)
-            // ici ce key représentera l' indice ( 0 et 1) et le tab le array ( chacun des deux tableaux)
-            {
-                echo '<div class="col-md-3 offset-md-5 alert alert-success text-dark mx-auto text-center">';
-                foreach ($tab as $key2 => $value) {
-                    // on rappelle notre $tab, car il faut linker le foreach dans le foreach
-                    echo "$key2 => $value <br>";
-                }
-                echo '</div>';
-            }
-        echo '<hr>';
+                    // exo afficher l' ensemble du tableau multi a l' aide d' une boucle foreach
+                    foreach ($tab_multi as $key => $tab)
+                        // ici ce key représentera l' indice ( 0 et 1) et le tab le array ( chacun des deux tableaux)
+                        {
+                            echo '<div class="col-md-3 offset-md-5 alert alert-success text-dark mx-auto text-center">';
+                            foreach ($tab as $key2 => $value) {
+                                // on rappelle notre $tab, car il faut linker le foreach dans le foreach
+                                echo "$key2 => $value <br>";
+                            }
+                            echo '</div>';
+                        }
+                    echo '<hr>';
 
-        // ********************************************************************************************************
+                    // ********************************************************************************************************
 
-        for ($i = 0; $i < count($tab_multi); $i++) {
-            // la boucle for permet de tourner autant de fois qu' il y a de lignes dans le tableau multi, donc 3 boucles dans ce cas précis
-            // on se sert de la variable $i de la boucle for pour aller crocheter a chaque indice du tableau multi et parcourir les données
-                echo '<div class="col-md-3 offset-md-5 alert alert-warning text-dark mx-auto text-center">';
-                foreach ($tab_multi[$i] as $key => $value) {
-                        echo "$key => $value <br>";
+                    for ($i = 0; $i < count($tab_multi); $i++) {
+                        // la boucle for permet de tourner autant de fois qu' il y a de lignes dans le tableau multi, donc 3 boucles dans ce cas précis
+                        // on se sert de la variable $i de la boucle for pour aller crocheter a chaque indice du tableau multi et parcourir les données
+                        // la différence avec la "double foreach", c' est que tout va se passer dans un premier temps dans les parentheses ( initialisation, condition d' entrée, incrémentation), puis on lui donne une foreach classique
+                        echo '<div class="col-md-3 offset-md-5 alert alert-warning text-dark mx-auto text-center">';
+                        foreach ($tab_multi[$i] as $key => $value) {
+                            echo "$key => $value <br>";
+                        }
+                        echo '</div>';
                     }
-                echo '</div>';
-            }
+
+                    echo '<hr> <h2 class="display-4 text-center">Super globales</h2><hr>';
+
+                    // https://www.php.net/manual/fr/language.variables.superglobals.php
+
+                    //  ce sont des variables de type array et elles sont accessibles de partout. A la fois dans l' espace global et local, elles permettent de véhiculer des données
+                    /*
+                    
+                    $_SERVER : véhicule les données liées au serveur
+                    $_GET : " " " transmises dans l' URL
+                    $_POST : " " " d' un formulaire
+                    $_FILES : " " " d' un fichier uploadé
+                    $_COOKIE : " " " d' un fichier cookie
+                    $_SESSION : " " " d' une session en cours
+                    
+                    Elles s' appliquent toujours avec le signe $ suivi d' un '_' et toujours en majuscule
+
+                    */
+
+                    echo '<pre>'; print_r($_SERVER); echo '</pre>';
+                    // voir résultat sur navigateur
 
 
-        ?>
+                    ?>
 
 
     </div>

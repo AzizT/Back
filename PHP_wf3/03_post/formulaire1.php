@@ -22,15 +22,50 @@
 
     <h1 class="display-4 text-center">Formulaire 1</h1>
 
-        <form class="col-md-6 offset-md-3">
+    <?php
+    echo '<pre>'; print_r($_POST); echo '</pre>';
+    // va nous permettre de récupérer les données du formulaire
+    // on va pouvoir observer les données saisies dans le formulaire qui vont se stocker directement dans la superglobale _POST, les indices correspondant aux attributs 'name' du formulaire html
+
+    // exo: afficher les données saisies dans le formulaire en passant par la superglobale _POST ( affichage utilisateur, non avec un array et donc ne pas utiliser de print_r ou vardump)
+
+    // deux méthodes
+    foreach($_POST as $key => $value)
+    // avec la foreach, rapide surtout si beaucoup de value a récupérer
+    {
+        echo "$key => $value<br>";
+    }
+    echo '<hr>';
+
+    if($_POST)
+    // permet d' éviter les messages d' erreur au chargement de la page. Le message d' erreur ne s' affichera que si on valide sans entrer de données dans le form. Mais plus au chargement de la page...sinon, deux erreurs UNDEFINED
+    // Désormais, si la condition IF est vérifiée, si elle renvoie TRUE, cela veut dire que l' on a soumis le formulaire et les indices 'email' et 'mdp' sont bien detectés 
+{
+    echo "Email : $_POST[email]<br>";
+    // autre méthode qui consiste a récupérer les données une par une en crochetant aux différents indices
+    echo "Mot de passe : " . $_POST['mdp'] . "<br>";
+}
+    echo '<hr>';
+
+
+
+
+    ?>
+
+        <form class="col-md-4 offset-md-4" method="post" action="">
+            <!--  method post est a privilégier par rapport a la method get -->
+            <!-- la method, c' est la maniere dont vont circuler les données
+                 Action sert a determiner l' URL de destination -->
+
             <div class="form-group">
-                <label for="exampleInputEmail1">Email address</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                <label for="email">Email address</label>
+                <input type="text" class="form-control" id="email" name="email" placeholder="Enter email">
+            <!-- l' attribut name a NE SURTOUT PAS OUBLIER
+                 sinon, aucune donnée saisie sur le formulaire ne sera récupérée en PHP -->
             </div>
             <div class="form-group">
-                <label for="exampleInputPassword1">Password</label>
-                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                <label for="mdp">Password</label>
+                <input type="text" class="form-control" id="mdp" name="mdp" placeholder="Password">
             </div>
             <div class="form-group form-check">
                 <input type="checkbox" class="form-check-input" id="exampleCheck1">
