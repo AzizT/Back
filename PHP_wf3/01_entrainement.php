@@ -116,7 +116,7 @@
         // ici, grace a ".=" on va afficher " Mourad Bruno". On ajoute, et non remplace les deux  affectations
 
         echo '<hr> <h2 class="display-4 text-center">Constante et constante magique</h2><hr>';
-        // une constante comme une variable permet de conserver une variable, sauf qu' on ne pourra lui réaffecter une autre valeur
+        // une constante comme une variable permet de conserver une valeur, sauf qu' on ne pourra lui réaffecter une autre valeur
 
         define("CAPITALE", "Paris");
         // la constante, par convention, est toujours declarée en majuscule. Ici, la constante est capitale, a laquelle on affecte la valeur Paris
