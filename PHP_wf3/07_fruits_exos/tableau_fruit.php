@@ -22,8 +22,21 @@
 	6- Sortir tout les prix pour tout les fruits avec tout les poids (indice: boucle imbriqu�e).
 	7- Faire un affichage dans une table HTML pour une pr�sentation plus sympa.
      -->
+     <?php 
 
+     $listeFruits = array("cerises", "bananes", "pommes", "peches");
+     $listePoids = array("100", "500", "1000", "1500", "2000", "3000", "5000", "10000");
 
+     require_once('focntion.php');
+     echo calcul($listeFruits[0], $listePoids[1]);
+
+  
+    foreach($listePoids){
+        echo calcul($listeFruits[0]);
+    }
+     
+
+    ?>
 
     <div class="container text-center">
 
