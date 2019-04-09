@@ -13,7 +13,12 @@
 </head>
 
 <body>
-    <!-- 
+
+    <div class="container text-center">
+
+        <h1 class="display-4">Tableaux Fruits/ Poids</h1>
+
+        <!-- 
         exo: 1- D�clarer un tableau ARRAY avec tout les fruits
 	2- D�clarer un tableau ARRAY avec les poids suivants : 100, 500, 1000, 1500, 2000, 3000, 5000, 10000.
 	3- Affichez les 2 tableaux
@@ -22,23 +27,74 @@
 	6- Sortir tout les prix pour tout les fruits avec tout les poids (indice: boucle imbriqu�e).
 	7- Faire un affichage dans une table HTML pour une pr�sentation plus sympa.
      -->
-     <?php 
+        <?php
+        require_once('focntion.php');
+        // rappel de la fonction, a faire en début,  par convention
 
-     $listeFruits = array("cerises", "bananes", "pommes", "peches");
-     $listePoids = array("100", "500", "1000", "1500", "2000", "3000", "5000", "10000");
 
-     require_once('focntion.php');
-     echo calcul($listeFruits[0], $listePoids[1]);
+        // exo 1 et 2
+        $listeFruits = array("cerises", "bananes", "pommes", "peches");
+        $listePoids = array(100, 500, 1000, 1500, 2000, 3000, 5000, 10000);
+        //  les quotes ne sont pas obligatoires car ce sont des integer
 
-  
-    foreach($listePoids){
-        echo calcul($listeFruits[0]);
-    }
-     
+        // exo 3
+        echo '<pre>';
+        print_r($listeFruits);
+        echo '</pre>';
+        echo '<pre>';
+        print_r($listePoids);
+        echo '</pre>';
 
-    ?>
+        // exo 4
+        echo '<hr>' . calcul($listeFruits[0], $listePoids[1]) . '<hr>';
 
-    <div class="container text-center">
+        // exo 5
+        echo '<div class="col-md-6 offset-md-3 mx-auto alert alert-info text-center">';
+
+        foreach ($listePoids as $poids) {
+            echo calcul($listeFruits[0], $poids);
+            //            cerises,   100 (pour le premier tour de boucle)
+            //  dans la fonction, on est obligé de lui rappeler $poids, même si on l' indique a coté du foreach
+        }
+        echo '</div>';
+
+        // exo6
+        foreach ($listeFruits as $fruit)
+            {
+                echo '<div class="col-md-6 offset-md-3 mx-auto alert alert-info text-center">';
+                foreach($listePoids as $poids)
+                {
+                    echo calcul($fruit, $poids) . '<hr>';
+                }
+                echo '</div>';
+            }
+
+        // exo7
+        echo '<table class="table table-bordered text-center"><tr>';
+        echo "<th>Poids</th>";
+        foreach($listeFruits as $fruit)
+        {
+            echo "<th>$fruit</th>";
+        }
+        echo '</tr>';
+        foreach($listePoids as $poids)
+        {
+            echo '<tr>';
+            echo "<th>$poids g</th>";
+            foreach($listeFruits as $fruit)
+            {
+                echo "<td>" . calcul($fruit, $poids) . "</td>";
+            }
+            echo'</tr>';
+        }
+        
+        echo '</table>';
+
+
+
+        ?>
+
+
 
 
 

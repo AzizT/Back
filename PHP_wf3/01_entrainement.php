@@ -245,7 +245,7 @@
         // XOR, condition exclusive, autorise juste une seule condition vraie. Si les deux ( ou encore plus) sont vraies, ou toutes fausses, alors XOR ne peut s' appliquer, et donc FALSE
 
         // forme contractée: 2éme possibilité d' ecriture
-        echo ($a = 10) ?" A est égal a 10 <br>" : "A n' est pas égal a 10<br>";
+        echo ($a = 10) ? " A est égal a 10 <br>" : "A n' est pas égal a 10<br>";
         // condition ternaire: le ? remplace le IF, et les deux points le "ELSE"
 
         //  comparaison
@@ -684,72 +684,72 @@
 
             <?= $key; ?> => <?= $value; ?> <br>
 
-                                            <?php endforeach; ?>
+        <?php endforeach; ?>
         <br>
         <?php
 
-                    $perso = array("m" => "Mario", "l" => "Luigi", "a" => "Aziz", "n" => "Nassim");
-                    echo '<pre>';
-                    print_r($perso);
-                    echo '</pre>';
+        $perso = array("m" => "Mario", "l" => "Luigi", "a" => "Aziz", "n" => "Nassim");
+        echo '<pre>';
+        print_r($perso);
+        echo '</pre>';
 
-                    echo "taille du tableau : " . count($perso) . '<br>';
-                    echo "taille du tableau : " . sizeof($perso) . '<br>';
-                    //  sizeof et count retournent la taille d' un tableau ARRAY => combien d' éléments a l' intérieur. Pas de différnece entre les deux méthodes
+        echo "taille du tableau : " . count($perso) . '<br>';
+        echo "taille du tableau : " . sizeof($perso) . '<br>';
+        //  sizeof et count retournent la taille d' un tableau ARRAY => combien d' éléments a l' intérieur. Pas de différnece entre les deux méthodes
 
-                    echo implode("-", $perso);
-                    // implode permet l' extration des données, en mettant un séparateur
-                    //  c'est une fonction prédéfinie qui rassemble les éléments d' un tableau en une chaine de caracteres, séparées par un caractere
+        echo implode("-", $perso);
+        // implode permet l' extration des données, en mettant un séparateur
+        //  c'est une fonction prédéfinie qui rassemble les éléments d' un tableau en une chaine de caracteres, séparées par un caractere
 
-                    echo '<hr> <h2 class="display-4 text-center">Tableau ARRAY multidimensionnel</h2><hr>';
+        echo '<hr> <h2 class="display-4 text-center">Tableau ARRAY multidimensionnel</h2><hr>';
 
-                    // tableau contenu dans un autre tableau => multidimensionnel
+        // tableau contenu dans un autre tableau => multidimensionnel
 
-                    $tab_multi = array(
-                        0 => array("nom" => "Chadli", "salaire" => 100000),
-                        1 => array("nom" => "Mobutu", "salaire" => 100000000),
-                        2 => array("nom" => "Amin Dada", "salaire" => 10000000000000)
-                    );
-                    echo '<pre>';
-                    print_r($tab_multi);
-                    echo '</pre>';
+        $tab_multi = array(
+            0 => array("nom" => "Chadli", "salaire" => 100000),
+            1 => array("nom" => "Mobutu", "salaire" => 100000000),
+            2 => array("nom" => "Amin Dada", "salaire" => 10000000000000)
+        );
+        echo '<pre>';
+        print_r($tab_multi);
+        echo '</pre>';
 
-                    // exo tenter de sortir "Chadli" en passant par le tableau multi sans faire un echo Chadli
+        // exo tenter de sortir "Chadli" en passant par le tableau multi sans faire un echo Chadli
 
-                    echo $tab_multi[0]['nom'] . '<hr>';
+        echo $tab_multi[0]['nom'] . '<hr>';
 
-                    // exo afficher l' ensemble du tableau multi a l' aide d' une boucle foreach
-                    foreach ($tab_multi as $key => $tab)
-                        // ici ce key représentera l' indice ( 0 et 1) et le tab le array ( chacun des deux tableaux)
-                        {
-                            echo '<div class="col-md-3 offset-md-5 alert alert-success text-dark mx-auto text-center">';
-                            foreach ($tab as $key2 => $value) {
-                                // on rappelle notre $tab, car il faut linker le foreach dans le foreach
-                                echo "$key2 => $value <br>";
-                            }
-                            echo '</div>';
-                        }
-                    echo '<hr>';
+        // exo afficher l' ensemble du tableau multi a l' aide d' une boucle foreach
+        foreach ($tab_multi as $key => $tab)
+            // ici ce key représentera l' indice ( 0 et 1) et le tab le array ( chacun des deux tableaux)
+            {
+                echo '<div class="col-md-3 offset-md-5 alert alert-success text-dark mx-auto text-center">';
+                foreach ($tab as $key2 => $value) {
+                    // on rappelle notre $tab, car il faut linker le foreach dans le foreach
+                    echo "$key2 => $value <br>";
+                }
+                echo '</div>';
+            }
+        echo '<hr>';
 
-                    // ********************************************************************************************************
+        // ********************************************************************************************************
 
-                    for ($i = 0; $i < count($tab_multi); $i++) {
-                        // la boucle for permet de tourner autant de fois qu' il y a de lignes dans le tableau multi, donc 3 boucles dans ce cas précis
-                        // on se sert de la variable $i de la boucle for pour aller crocheter a chaque indice du tableau multi et parcourir les données
-                        // la différence avec la "double foreach", c' est que tout va se passer dans un premier temps dans les parentheses ( initialisation, condition d' entrée, incrémentation), puis on lui donne une foreach classique
-                        echo '<div class="col-md-3 offset-md-5 alert alert-warning text-dark mx-auto text-center">';
-                        foreach ($tab_multi[$i] as $key => $value) {
-                            echo "$key => $value <br>";
-                        }
-                        echo '</div>';
-                    }
+        for ($i = 0; $i < count($tab_multi); $i++) {
+            // la boucle for permet de tourner autant de fois qu' il y a de lignes dans le tableau multi, donc 3 boucles dans ce cas précis
+            // on se sert de la variable $i de la boucle for pour aller crocheter a chaque indice du tableau multi et parcourir les données
+            // la différence avec la "double foreach", c' est que tout va se passer dans un premier temps dans les parentheses ( initialisation, condition d' entrée, incrémentation), puis on lui donne une foreach classique
+            echo '<div class="col-md-3 offset-md-5 alert alert-warning text-dark mx-auto text-center">';
+            foreach ($tab_multi[$i] as $key => $value) {
+                echo "$key => $value <br>";
+            }
+            echo '</div>';
+        }
 
-                    echo '<hr> <h2 class="display-4 text-center">Super globales</h2><hr>';
+        echo '<hr> <h2 class="display-4 text-center">Super globales</h2><hr>';
 
-                    // https://www.php.net/manual/fr/language.variables.superglobals.php
+        // https://www.php.net/manual/fr/language.variables.superglobals.php
 
-                    //  ce sont des variables de type array et elles sont accessibles de partout. A la fois dans l' espace global et local, elles permettent de véhiculer des données
-                    /*
+        //  ce sont des variables de type array et elles sont accessibles de partout. A la fois dans l' espace global et local, elles permettent de véhiculer des données
+        /*
                     
                     $_SERVER : véhicule les données liées au serveur
                     $_GET : " " " transmises dans l' URL
@@ -762,11 +762,47 @@
 
                     */
 
-                    echo '<pre>'; print_r($_SERVER); echo '</pre>';
-                    // voir résultat sur navigateur
+        echo '<pre>';
+        print_r($_SERVER);
+        echo '</pre>';
+        // voir résultat sur navigateur
 
+        echo '<hr> <h2 class="display-4 text-center">Classe et objet</h2><hr>';
 
-                    ?>
+        // un objet est un autre type de données, a la maniere d' un array. Il permet de regrouper des informations.
+        // Cependant, cela va beaucoup plus loin car on peut y declarer des variables ( appellées attributs ou propriétés), mais aussi des fonctions ( appellées méthodes)
+
+        class Etudiant
+        // une class est comme un plan de construction, qui regroupe des données
+        // la premiere lettre du nom de cette class sera une majuscule ( convention)
+        {
+            public $prenom = 'Aziz';
+            // public, permet de préciser que l' élément sera accessible de partout ( il existe aussi protected et private, que nous verrons plus tard, tous sont des niveaux de visibilité)
+            public $age = 50;
+            public function pays()
+            {
+                return 'France';
+            }
+        }
+        // echo $age;
+        // le echo ne fonctionne pas de cette maniere
+
+        $objet = new Etudiant;
+        // new permet de créer un exemplaire de la cass, un objet, et c' est ainsi qu' on pourra faire un echo
+        // new permet d' instancier la class Etudiant et en faire un objet
+        // $objet est un exemplaire de la class Etudiant, il en est l' enfant
+        // pour en exploiter les données declarées, il faut créer une instance
+        echo '<pre>'; var_dump($objet);echo'</pre>';
+        echo '<pre>'; var_dump(get_class_methods($objet));echo'</pre>';
+        // get_class_methods() permet d' afficher les méthodes (fonctions) issues de la Class, sinon, on reste a l' extérieur et on ne peut les afficher spécifiquement
+
+        echo "Je s' appelle " . $objet->prenom . '<hr>';
+        // dans un array, on pioche des données avec un crochet. Dans un objet, c' est avec la fleche ->
+        echo "Mon age est " . $objet->age . 'ans' . '<hr>';
+        // pas besoin de $ pour prenom et age car ils sont 'public'
+        echo "Je réside en  " . $objet->pays() . '<hr>';
+
+        ?>
 
 
     </div>
