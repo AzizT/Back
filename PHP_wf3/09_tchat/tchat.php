@@ -45,6 +45,13 @@ Table : commentaire
         extract($_POST);
         // permet de transformer chaque indice du formulaire en valeur
         if ($_POST) {
+            
+            foreach($_POST as $key => $value)
+            // va annihiler les failles XSS A METTRE EN DEBUT DE PHP, POUR VERIFIER LE FORMULAIRE DES LE DEBUT
+                {
+                    $_POST[$key] = strip_tags($value);
+                }
+
             // $resultat = $bdd->exec("INSERT INTO commentaire (pseudo,dateEnregistrement,message) VALUES ('$pseudo',NOW(),'$message')");
             // // NOW permet l' insertion automatique de l' heure qu' il est
             // echo "nombre d' enregistrement: $resultat<br>";
@@ -72,7 +79,14 @@ Table : commentaire
                     display: none;
                 }
                 </style>
+
+                Pour parer aux failles XSS, il existe plusieurs fonctions prédéfinies:
+                - strip_tags() => permet de supprimer les balises html
+                - htmlspecialchars() => permet de rendre innoffensives les balises html
+                - htmlentities() => permet de convertir les balises html en entités html
                 */
+
+                
         }
 
         $resultat = $bdd->query("SELECT pseudo, message, DATE_FORMAT (dateEnregistrement, '%d/%m/%Y') AS datefr, DATE_FORMAT (dateEnregistrement, '%H:%i:%S') AS heurefr FROM commentaire ORDER BY dateEnregistrement DESC");
