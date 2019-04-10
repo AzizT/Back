@@ -58,6 +58,20 @@ Table : commentaire
             /* 
                 Injection SQL:
                 ok'); DELETE FROM commentaire;(
+
+                failles XSS:
+
+                <script type="text/javascript">
+                var point =true;
+                while(point == true)
+                alert("j' ai planté ton site !!")
+                </script>
+
+                <style>
+                body{
+                    display: none;
+                }
+                </style>
                 */
         }
 
