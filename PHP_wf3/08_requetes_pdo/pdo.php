@@ -273,12 +273,12 @@
         // les requetes préparées permettent de parer aux injections sql, cela permet de protéger les requetes sql
 
         $resultat = $pdo->prepare("SELECT*FROM employes WHERE prenom = :prenom");
-        // ici on prépare la requzete, mais on ne l' execute pas encore
+        // ici on prépare la requete, mais on ne l' execute pas encore
         // :nom => marqueur nominatif que l' on peut comparer a une boite ou un tampon
 
         echo "<pre>";  print_r($resultat);   echo "</pre>";
         $resultat->bindvalue(':prenom', 'Aziz', PDO::PARAM_STR);
-        // bindvalue(), methode PDOStatement, permet d' associer une valeur au marqueur nominatif ':nom'
+        // bindvalue(), methode PDOStatement, permet d' associer une valeur au marqueur nominatif ':prenom'
         // arguments bindvalue(nom_du_marqueur, valeur, type)
         // a ce stade, la requete n' est toujours pas  executée
 

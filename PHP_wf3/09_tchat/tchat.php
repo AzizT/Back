@@ -33,6 +33,13 @@ Table : commentaire
     <div class="container">
 
         <?php
+        foreach($_POST as $key => $value)
+            // va annihiler les failles XSS A METTRE EN DEBUT DE PHP, POUR VERIFIER LE FORMULAIRE DES LE DEBUT, avant même la connexion a la bdd
+                {
+                    $_POST[$key] = strip_tags(trim($value));
+                    // on passe en revue le formulaire en executant la fonction strip_tags sur chaque valeur saisie dans le formulaire
+                    // trim() est une fonction prédéfinie qui supprime les espaces en début et fin de chaine
+                }
         // connexion bdd
         $bdd = new PDO('mysql:host=localhost;dbname=tchat', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING, PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'));
 
@@ -46,17 +53,15 @@ Table : commentaire
         // permet de transformer chaque indice du formulaire en valeur
         if ($_POST) {
             
-            foreach($_POST as $key => $value)
-            // va annihiler les failles XSS A METTRE EN DEBUT DE PHP, POUR VERIFIER LE FORMULAIRE DES LE DEBUT
-                {
-                    $_POST[$key] = strip_tags($value);
-                }
+            
 
             // $resultat = $bdd->exec("INSERT INTO commentaire (pseudo,dateEnregistrement,message) VALUES ('$pseudo',NOW(),'$message')");
             // // NOW permet l' insertion automatique de l' heure qu' il est
             // echo "nombre d' enregistrement: $resultat<br>";
+            $req = "INSERT INTO commentaire (pseudo, dateEnregistrement, message) VALUES (:pseudo, NOW(), :message)";
+            // preparation de la requete ( pour contrer les injections sql). On extrait la requete du prepare(), on la positionne au niveau de $req, et on la remplace par $req dans prepare($req)
 
-            $resultat = $bdd->prepare("INSERT INTO commentaire (pseudo, dateEnregistrement, message) VALUES (:pseudo, NOW(), :message)");
+            $resultat = $bdd->prepare($req);
             $resultat->bindValue(':pseudo', $pseudo, PDO::PARAM_STR);
             $resultat->bindValue(':message', $message, PDO::PARAM_STR);
             $resultat->execute();
