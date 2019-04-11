@@ -47,6 +47,7 @@
         if (empty($error) && empty($error1)) {
                 $data_insert = $bdd->prepare("INSERT INTO membre (pseudo, mdp, nom, prenom, email, civilite, ville, code_postal, adresse) VALUES (:pseudo, :mdp, :nom, :prenom, :email, :civilite, :ville, :code_postal, :adresse)");
                 foreach ($_POST as $key => $value) {
+                    // cette boucle va nous permettre d' éviter de taper toutes les lignes bindValue une a une
                         if ($key != 'confirm_mdp')
                         {
                             $data_insert->bindValue(":$key", $value, PDO::PARAM_STR);
@@ -54,6 +55,10 @@
                     }
             }
             $data_insert->execute();
+
+            header("Location: connexion.php?action=validate");
+            // redirige vers le fichier connexion, une fois validé
+            // header est une fonction prédéfinie, qui permet d' effectuer une redirection de page/ URL
     }
     require_once("include/header.php");
     ?>
