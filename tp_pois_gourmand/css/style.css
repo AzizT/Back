@@ -1,0 +1,69 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    background: #a9f0d1;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+}
+.container{
+    background: url(../img/bg.jpg);
+}
+
+h1, h2, h5{
+    font-family: 'Srisakdi';
+}
+.fas{
+    color:#6c9986;
+}
+img{
+    width: 100%;
+    height: 55%;
+}
+#addition{
+    background-color: white;
+}
+#addition h2{
+    text-align: left;
+    background-color: #c8e9da;
+}
+#addition img{
+    width: 90%;
+    height: 80%;
+    margin-left: 1rem;
+}
+#addition .commande{
+    margin-left: 5rem;
+    font-weight: bold;
+}
+.note{
+    text-align: right;
+    font-size: .7rem;
+    margin-top: 7rem;
+}
+.formule{
+    background: white;
+    margin-top: 3rem;
+    box-shadow: 1px 1px 5px grey;
+}
+h1{
+    padding-top: 2rem;
+    
+}
+h2{
+    text-align: center;
+    font-weight: bold;
+    padding-top: .5rem;
+}
+.total{
+    text-align: right;
+    font-size: .8rem;
+}
+footer{
+    text-align: right;
+    margin-top: 5rem;
+    padding-bottom: .3rem;
+}
