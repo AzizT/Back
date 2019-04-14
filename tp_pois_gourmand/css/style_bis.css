@@ -1,0 +1,75 @@
+body{
+    background: url(../img/peas.jpg)no-repeat;
+    background-size: cover;
+    /* le vert pastel du body.
+    Ci dessous, les margin top et bottom pour encadrer le container */
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+}
+.container{
+    background-image: url(../img/bg.jpg);
+    box-shadow: 2px 2px 10px black;
+}
+.fas{
+    color: #6c9986;
+    /* le vert pour l' oiseau kiwi fontawesom */
+}
+h1, h2, h5{
+    font-family: 'Srisakdi';
+}
+h1{
+    padding-top: 5rem;
+    margin-left: 3rem;
+    font-weight: bold;
+    margin-bottom: 5rem;
+}
+h2{
+    background-color: #ccf1e2;
+    padding: .5rem;
+}
+.card h5{
+    /* pour ne cibler que le h5 des formules, pas celui du footer */
+    font-weight: bold;
+}
+.card{
+    /* va gérer le comportement global de mes formules-card */
+    margin-bottom: 5rem;
+}
+.card-img-top {
+    /* technique de Marie Hélène pour gérer la taille des images des card ( son reglage étant de 25vh, trop grand car pbs avec formule delhi */
+    max-height: 17vh;
+}
+#commande{
+    margin-bottom: 5rem;
+}
+.image_commande{
+    /* pour ne cibler que l' image du menu random */
+    height: 75%;
+    margin-top: .5rem;
+    margin-left: 1rem;
+}
+.image_texte{
+    background-color: white;
+    border: 1px solid rgb(233, 231, 231);
+    margin-left: 0.2rem;
+    margin-right: 0.1rem;
+}
+.texte_commande{
+    margin-left: 5.5rem;
+}
+#commande .addition{
+    text-align: right;
+    font-size: .6rem;
+    margin-bottom: -.03rem;
+}
+.pois .addition .fas{
+    margin-top: 5rem;
+    color: black;
+}
+.image_pois{
+    margin-left: 1rem;
+}
+footer{
+    padding-bottom: .3rem;
+    text-align: right;
+}

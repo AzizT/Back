@@ -1,0 +1,68 @@
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    background: #a9f0d1;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+    font-family: 'Srisakdi', cursive;
+}
+
+h1 {
+    padding: 60px;
+    font-weight: bold;
+}
+
+h3 {
+    font-weight: bold;
+    text-align: center;
+}
+
+h4 {
+    text-align: right;
+}
+
+.container {
+    background: url(../img/bg.jpg) repeat;
+    padding-bottom: 5px;
+    margin-top: 5vh;
+}
+
+.card-img-top {
+    max-height: 25vh;
+}
+
+.card {
+    margin-bottom: 6vh;
+}
+
+img[src="pg.jpg"] {
+    max-width: 100%;
+    margin-bottom: 15vh;
+}
+
+footer {
+    margin-top: 5vh;
+}
+
+.blockquote-footer {
+    text-align: right;
+}
+
+.fa-kiwi-bird {
+    color: #6c9986;
+}
+
+#pois {
+    height: 38vh;
+    margin: 0;
+    margin-bottom: 0px;
+    margin-bottom: 4rem;
+}
