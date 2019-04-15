@@ -44,7 +44,7 @@ if (!empty($_GET)) {
     <header>
         
         <nav>
-            <h1><a href="atelier.php"><i class="fas fa-kiwi-bird"></i></a> Au Pois Gourmand</h1>
+            <h1><a href="index.php"><i class="fas fa-kiwi-bird"></i></a> Au Pois Gourmand</h1>
         </nav>
 
     </header>
@@ -161,7 +161,7 @@ if (!empty($_GET)) {
                 <p>Nous vous souhaitons une bonne dégustation.</p>
                 <p>Un café gourmand vous est proposé pour terminer votre pause gourmande en douceur.</p>
                 <p class="addition">- Votre facture sera de <?php echo $prix; ?> €</p>
-                <a href="atelier.php" class="btn col-md-12 btn-success">Choisir un autre menu</a>
+                <a href="index.php" class="btn col-md-12 btn-success">Choisir un autre menu</a>
             </div>
         </div>
 

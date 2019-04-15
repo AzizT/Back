@@ -7,7 +7,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Accueil Boutique</title>
 
-    <link rel="stylesheet" href="include/css/style.css">
+    <!-- mon css -->
+    <link rel="stylesheet" href="<?= URL ?>include/css/style.css">
 
     <!-- link bootstrap -->
 
@@ -25,26 +26,61 @@
 
         <div class="collapse navbar-collapse" id="navbarsExample04">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="connexion.php">Connexion</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="inscription.php">Inscription</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="profil.php">Profil</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Back Office</a>
-                    <div class="dropdown-menu" aria-labelledby="dropdown04">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
-                </li>
+
+                <?php if (internauteEstConnecte()) : ?>
+                    <!-- on donne les autorisations a l' utilisateur connecté, et on lui retire le reste
+                                                    ici, on lui donne l' autorisation pour profil, panier, boutique + se deconnecter -->
+
+                    <li class="nav-item active">
+                        <a class="nav-link" href="<?= URL ?>boutique.php">Boutique</a>
+                    </li>
+
+                    <li class="nav-item active">
+                        <a class="nav-link" href="<?= URL ?>profil.php">Profil</a>
+                    </li>
+
+                    <li class="nav-item active">
+                        <a class="nav-link" href="<?= URL ?>panier.php">Panier</a>
+                    </li>
+
+                    <li class="nav-item active">
+                        <a class="nav-link" href="<?= URL ?>connexion.php?action=deconnexion">Deconnexion</a>
+                    </li>
+
+                <?php else : ?>
+                    <!-- les autorisations pour celui qui n' est pas connecté -->
+
+                    <li class="nav-item active">
+                        <a class="nav-link" href="<?= URL ?>boutique.php">Boutique</a>
+                    </li>
+
+                    <li class="nav-item active">
+                        <a class="nav-link" href="<?= URL ?>connexion.php">Connexion</a>
+                    </li>
+
+                    <li class="nav-item active">
+                        <a class="nav-link" href="<?= URL ?>inscription.php">Inscription</a>
+                    </li>
+
+                    <li class="nav-item active">
+                        <a class="nav-link" href="<?= URL ?>panier.php">Panier</a>
+                    </li>
+
+                <?php endif; ?>
+
+                <?php if (internauteEstConnecteEstAdmin()) : ?>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Panneau Administrateur</a>
+                        <div class="dropdown-menu" aria-labelledby="dropdown04">
+                            <a class="dropdown-item" href="<?= URL ?>admin/gestion_boutique.php">Gestion Boutique</a>
+                            <a class="dropdown-item" href="<?= URL ?>admin/gestion_commande.php">Gestion Commande</a>
+                            <a class="dropdown-item" href="<?= URL ?>admin/gestion_membre.php">Gestion Membre</a>
+                        </div>
+                    </li>
+
+                <?php endif; ?>
+
             </ul>
             <form class="form-inline my-2 my-md-0">
                 <input class="form-control" type="text" placeholder="Search">

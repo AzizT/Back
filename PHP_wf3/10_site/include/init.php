@@ -8,7 +8,7 @@ session_start();
 
 // *******************************************************chemin************************************************
 
-define("RACINE_SITE", $_SERVER['DOCUMENT_ROOT'] . '/PHP_wf3/10_site/');
+define("RACINE_SITE", $_SERVER['DOCUMENT_ROOT'] . '/Back/PHP_wf3/10_site/');
 // Lors de l' enregistrement d' image/photos, nous aurons besoin du chemin physique complet, pour enregistrer la photo dans le bon dossier (lui filer celui du chemin global, celui ou se situait l' index supprimé depuis)
 // echo RACINE_SITE;
 

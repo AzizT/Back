@@ -14,6 +14,12 @@
     require_once("include/init.php");
     extract($_POST);
 
+    if (internauteEstConnecte())
+        // si' l 'utilisateur est déjà connecté, il n' a donc rien a faire n page connexion => on le redirige vers son profil
+        {
+            header("Location: profil.php");
+        }
+
     if ($_POST) {
 
 
@@ -45,20 +51,23 @@
         }
 
         if (empty($error) && empty($error1)) {
-                $data_insert = $bdd->prepare("INSERT INTO membre (pseudo, mdp, nom, prenom, email, civilite, ville, code_postal, adresse) VALUES (:pseudo, :mdp, :nom, :prenom, :email, :civilite, :ville, :code_postal, :adresse)");
-                foreach ($_POST as $key => $value) {
-                    // cette boucle va nous permettre d' éviter de taper toutes les lignes bindValue une a une
-                        if ($key != 'confirm_mdp')
-                        {
-                            $data_insert->bindValue(":$key", $value, PDO::PARAM_STR);
-                        }
+
+            // $_POST['mdp'] = password_hash($_POST['mdp'], PASSWORD_DEFAULT); 
+            // on ne conserve jamais de mdp en clair dans la bdd. password_hash permet de créer une clé de hashage ( cryptage)
+
+            $data_insert = $bdd->prepare("INSERT INTO membre (pseudo, mdp, nom, prenom, email, civilite, ville, code_postal, adresse) VALUES (:pseudo, :mdp, :nom, :prenom, :email, :civilite, :ville, :code_postal, :adresse)");
+            foreach ($_POST as $key => $value) {
+                // cette boucle va nous permettre d' éviter de taper toutes les lignes bindValue une a une
+                if ($key != 'confirm_mdp') {
+                        $data_insert->bindValue(":$key", $value, PDO::PARAM_STR);
                     }
             }
-            $data_insert->execute();
+        }
+        $data_insert->execute();
 
-            header("Location: connexion.php?action=validate");
-            // redirige vers le fichier connexion, une fois validé
-            // header est une fonction prédéfinie, qui permet d' effectuer une redirection de page/ URL
+        header("Location: connexion.php?action=validate");
+        // redirige vers le fichier connexion, une fois validé
+        // header est une fonction prédéfinie, qui permet d' effectuer une redirection de page/ URL
     }
     require_once("include/header.php");
     ?>

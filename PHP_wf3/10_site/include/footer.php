@@ -1,6 +1,6 @@
         </section>
 
-        <footer class="bg-dark text-white text-center p-3 fixed-bottom mt-4">
+        <footer class="bg-dark text-white fixed-bottom text-center p-3 mt-4">
             &copy; 2019 - Powered By Mézigue -
         </footer>
 
