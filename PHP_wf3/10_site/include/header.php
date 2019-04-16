@@ -7,12 +7,17 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Accueil Boutique</title>
 
-    <!-- mon css -->
-    <link rel="stylesheet" href="<?= URL ?>include/css/style.css">
+    <!-- link fontawesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 
     <!-- link bootstrap -->
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <!-- mon css -->
+    <link rel="stylesheet" href="<?= URL ?>include/css/style.css">
+
+
 
 </head>
 
@@ -29,7 +34,7 @@
 
                 <?php if (internauteEstConnecte()) : ?>
                     <!-- on donne les autorisations a l' utilisateur connecté, et on lui retire le reste
-                                                    ici, on lui donne l' autorisation pour profil, panier, boutique + se deconnecter -->
+                                                        ici, on lui donne l' autorisation pour profil, panier, boutique + se deconnecter -->
 
                     <li class="nav-item active">
                         <a class="nav-link" href="<?= URL ?>boutique.php">Boutique</a>
