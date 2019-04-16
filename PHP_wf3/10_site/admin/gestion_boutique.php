@@ -48,6 +48,12 @@ if ($_POST) {
 
         $photo_bdd = '';
 
+        if (isset($_GET['action']) && $_GET['action'] == 'modification') {
+
+                $photo_bdd = $photo_actuelle; // si on souhaite conserver la même photo en cas de modification, on affecte la valeur du champs photo 'hidden', c'est à dire l'URLde la photo selectionnée en BDD
+
+            }
+
         if (!empty($_FILES['photo']['name'])) // on vérifie que l'indice 'name' dans la superglobale $_FILES n'est pas vide, cela veut dire que l'on a bien uploader une photo
 
             {
@@ -82,13 +88,16 @@ if ($_POST) {
 
 
 
+
+
         $produit_insert = $bdd->prepare("INSERT into produit(reference, categorie ,titre, description, couleur, taille, public, photo, prix, stock) VALUES(:reference, :categorie , :titre, :description, :couleur, :taille, :public, :photo, :prix, :stock)");
 
         foreach ($_POST as $key => $value) {
 
+                if ($key != 'photo_actuelle') {
 
-
-                $produit_insert->bindValue(":$key", $value, PDO::PARAM_STR);
+                        $produit_insert->bindValue(":$key", $value, PDO::PARAM_STR);
+                    }
             }
 
         $produit_insert->bindValue(":photo", $photo_bdd, PDO::PARAM_STR);
@@ -217,7 +226,7 @@ require_once("../include/header.php");
 
     <?php
 
-    if (isset($_Get['id_produit'])) {
+    if (isset($_GET['id_produit'])) {
 
             $resultat = $bdd->prepare("SELECT * FROM produit WHERE  id_produit = :id_produit");
 
@@ -242,7 +251,13 @@ require_once("../include/header.php");
 
     $couleur = (isset($produit_actuel['couleur'])) ? $produit_actuel['couleur'] : '';
 
+    $public = (isset($produit_actuel['public'])) ? $produit_actuel['public'] : '';
+
     $prix = (isset($produit_actuel['prix'])) ? $produit_actuel['prix'] : '';
+
+    $photo = (isset($produit_actuel['photo'])) ? $produit_actuel['photo'] : '';
+
+    $taille = (isset($produit_actuel['taille'])) ? $produit_actuel['taille'] : '';
 
     $stock = (isset($produit_actuel['stock'])) ? $produit_actuel['stock'] : '';
 
@@ -258,7 +273,7 @@ require_once("../include/header.php");
 
 
 
-    <form class="col-md-6 offset-md-4 form1" method="post" action="" enctype="multipart/form-data">
+    <form class="col-md-6 offset-md-4 formulaire" method="post" action="" enctype="multipart/form-data">
 
         <!-- enctype: obligatoire en PHP pour recolter les informations d'1 fichier uploadé -->
 
@@ -328,9 +343,15 @@ require_once("../include/header.php");
 
                     <option>choose</option>
 
-                    <option>l</option>
+                    <option value="s" <?php if ($taille == 's') echo 'selected'; ?>>S</option>
 
-                    <option>XL</option>
+                    <option value="m" <?php if ($taille == 'm') echo 'selected'; ?>>M</option>
+
+                    <option value="l" <?php if ($taille == 'l') echo 'selected'; ?>>L</option>
+
+                    <option value="xl" <?php if ($taille == 'xl') echo 'selected'; ?>>XL</option>
+
+
 
                 </select>
 
@@ -344,11 +365,11 @@ require_once("../include/header.php");
 
             <select class="form-control" id="public" name="public" value="">
 
-                <option value="mixte">Mixte</option>
+                <option value="mixte" <?php if ($public == 'mixte') echo 'selected'; ?>>Mixte</option>
 
-                <option value="f">Feminin</option>
+                <option value="f" <?php if ($public == 'f') echo 'selected'; ?>>Feminin</option>
 
-                <option value="m">Masculin</option>
+                <option value="m" <?php if ($public == 'm') echo 'selected'; ?>>Masculin</option>
 
             </select>
 
@@ -365,6 +386,16 @@ require_once("../include/header.php");
                 <input type="file" class="form-control" id="photo" aria-describedby="" placeholder="" name="photo">
 
             </div>
+
+            <?php if (!empty($photo)) : ?>
+
+                <em>Vous pouvez uploader une nouvelle photo si vous souhaitez la changer</em><br>
+
+                <img src="<?= $photo ?>" alt="<? $titre ?>" class="card-img-top">
+
+            <?php endif; ?>
+
+            <input type="hidden" id="photo_actuelle" name="photo_actuelle" value="<?= $photo ?>">
 
 
 
