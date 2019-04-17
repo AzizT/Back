@@ -17,6 +17,9 @@
     <!-- mon css -->
     <link rel="stylesheet" href="<?= URL ?>include/css/style.css">
 
+    <!-- googlefont -->
+    <link href="https://fonts.googleapis.com/css?family=Bangers" rel="stylesheet">
+
 
 
 </head>
@@ -34,7 +37,7 @@
 
                 <?php if (internauteEstConnecte()) : ?>
                     <!-- on donne les autorisations a l' utilisateur connecté, et on lui retire le reste
-                                                        ici, on lui donne l' autorisation pour profil, panier, boutique + se deconnecter -->
+                                                            ici, on lui donne l' autorisation pour profil, panier, boutique + se deconnecter -->
 
                     <li class="nav-item active">
                         <a class="nav-link" href="<?= URL ?>boutique.php">Boutique</a>

@@ -84,14 +84,25 @@ if ($_POST) {
 
             }
 
-        // Exo : Réaliser la requete d'insertion permettant d'inserer un produit dans la table 'produit' (requête préparée).
+        // Exo : Réaliser la requete d'insertion permettant d'inserer un produit dans la table 'produit' (requête préparée) + a l' interieur (else) la requete d' update ( modification de produit).
 
 
 
-
-
+        if(isset($_GET['action']) && $_GET['action'] == 'ajout')
+            {
         $produit_insert = $bdd->prepare("INSERT into produit(reference, categorie ,titre, description, couleur, taille, public, photo, prix, stock) VALUES(:reference, :categorie , :titre, :description, :couleur, :taille, :public, :photo, :prix, :stock)");
 
+                $_GET['action'] = 'affichage';
+
+                $validate .= "<div class='alert alert-success col-md-6 offset-md-3 text-center'>Le produit n° <strong>$reference</strong> a bien été ajouté !!</div>";
+
+            }else{
+                $produit_insert = $bdd->prepare("UPDATE produit SET reference = :reference, categorie = :categorie, titre = :titre, description = :description, couleur = :couleur, taille = :taille, public = :public, photo = :photo, prix = :prix, stock = :stock WHERE id_produit = $id_produit");
+
+                $_GET['action'] = 'affichage';
+
+                $validate .= "<div class='alert alert-success col-md-6 offset-md-3 text-center'>Le produit n° <strong>$id_produit</strong> a bien été modifié !!</div>";
+            }
         foreach ($_POST as $key => $value) {
 
                 if ($key != 'photo_actuelle') {
