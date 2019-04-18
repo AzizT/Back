@@ -24,9 +24,6 @@
     $msg = '<div class="alert alert-warning text-danger"> Veuillez saisir votre pseudo ( entre 3 et 10 caractères)</div>';
 
     if ($_POST) {
-        // Je vérifie que chaque champs n'esxistent pas ou bien qu'il ne correspondent pas à ce que j'attend. Dans ce cas un message d'erreur sera affiché.
-
-        // le nom
         if (strlen($_POST['pseudo']) < 3 || strlen($_POST['pseudo']) > 10) {
             echo $msg;
         }
