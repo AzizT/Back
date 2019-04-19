@@ -1,0 +1,25 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+header{
+    z-index: 1;
+    height: 3.5rem;
+}
+.navbar a{
+    font-size: 1.5rem;
+}
+.carousel-inner{
+    margin-top: -6vh;
+    z-index: 0;
+}
+.container button{
+    margin-top: 3rem;
+}
+footer{
+    margin-top: 3rem;
+}
+footer a{
+    margin-left: 1rem;
+    font-size: 1.4rem;
+}
