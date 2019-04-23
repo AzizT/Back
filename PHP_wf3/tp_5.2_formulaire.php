@@ -11,13 +11,6 @@
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-    <!-- link pour fontawesome -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-
-    <link rel="stylesheet" href="css/style.css">
-
-    <link href="https://fonts.googleapis.com/css?family=Bangers" rel="stylesheet">
-
 </head>
 
 <body>
@@ -27,13 +20,7 @@
     print_r($_POST);
     echo '</pre>';
 
-    $bdd = new PDO('mysql:host=localhost;dbname=repertoire', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING, PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'));
-
     $msg = "";
-
-    foreach ($_POST as $key => $value) {
-        echo "$key => $value<br>";
-    }
 
 
     if ($_POST) {
@@ -69,7 +56,8 @@
             $msg .= '<div class="alert alert-warning text-danger"> Veuillez saisir votre ville entre 2 et 30 caractères</div>';
         }
 
-        if (!is_numeric($_POST['codePostal']) || iconv_strlen($_POST['codePostal']) !== 5) {
+        // le code postal
+        if (!is_numeric($_POST['codepostal']) || iconv_strlen($_POST['codepostal']) !== 5) {
             $msg .= '<div class="alert alert-warning text-danger">Veuillez saisir 5 chiffres</div>';
             // iconv permet de ne compter que les caracteres, alors qur strlen va compter les caracteres spéciaux aussi, comme un accent ( qui ne sera pas compté car au dessus d' un autre caractere)
         }
@@ -79,7 +67,8 @@
             $msg .= '<div class="alert alert-warning text-danger"> Veuillez saisir votre adresse entre 2 et 30 caractères</div>';
         }
 
-        if (!isset($_POST['sexe']) || $_POST['sexe'] != "f" && $_POST['sexe'] != "h" && $_POST['sexe'] != "n") {
+        // le sexe
+        if (!isset($_POST['sexe']) || $_POST['sexe'] != "f" && $_POST['sexe'] != "m" && $_POST['sexe'] != "n") {
             $msg .= '<div class="alert alert-warning text-danger"> Veuillez choisir un genre</div>';
         }
 
@@ -90,17 +79,91 @@
         if (empty($msg)) {
             // si notre variable $msg est vide (empty), c' est a dire qu' elle n' a stocké aucune valeur, donc aucune erreur, alors c' est que tout est ok
             echo '<div class="alert alert-success text-dark">Félicitations, votre formulaire est valide et par conséquent transmis</div>';
+
+            $bdd = new PDO(
+                'mysql:host=localhost;dbname=repertoire',
+                'root',
+                '',
+                array(
+                    PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING,
+                    PDO::MYSQL_ATTR_INIT_COMMAND => 'set NAMES utf8'
+                )
+            );
+        
+
+        $insert_bdd = $bdd->prepare("INSERT INTO annuaire (nom, prenom, telephone, profession, ville, codepostal, adresse, date_de_naissance, sexe, description) VALUES(:nom, :prenom, :telephone, :profession, :ville, :codepostal, :adresse, :date_de_naissance, :sexe, :description)");
+
+
+
+        $insert_bdd->bindValue(":nom", $_POST['nom'], PDO::PARAM_STR);
+
+        $insert_bdd->bindValue(":prenom", $_POST['prenom'], PDO::PARAM_STR);
+
+        $insert_bdd->bindValue(":telephone", $_POST['telephone'], PDO::PARAM_STR);
+
+        $insert_bdd->bindValue(":profession", $_POST['profession'], PDO::PARAM_STR);
+
+        $insert_bdd->bindValue(":ville", $_POST['ville'], PDO::PARAM_STR);
+
+        $insert_bdd->bindValue(":codepostal", $_POST['codepostal'], PDO::PARAM_STR);
+
+        $insert_bdd->bindValue(":adresse", $_POST['adresse'], PDO::PARAM_STR);
+
+        $insert_bdd->bindValue(":date_de_naissance", $_POST['date_de_naissance'], PDO::PARAM_STR);
+
+        $insert_bdd->bindValue(":sexe", $_POST['sexe'], PDO::PARAM_STR);
+
+        $insert_bdd->bindValue(":description", $_POST['description'], PDO::PARAM_STR);
+
+        $insert_bdd->execute();
+
         }
 
-        $insert_bdd = $bdd->prepare("INSERT INTO annuaire (nom, prenom, telephone, profession, ville, codepostal, adresse, date_de_naissance, sexe, description) VALUES(:nom, :prenom,:telephone,:profession,:ville,:codepostal,:adresse,:date_de_naissance,:sexe),:description");
+        //  tableau non conventionnel récapitulatif de toutes les données insérées dans ma bdd
+        $resultat = $bdd->query("SELECT * FROM annuaire");
+            $employe = $resultat->fetchAll(PDO::FETCH_ASSOC);
 
-        echo '<div class="col-md-6 offset-md-3 alert alert-success text-center"> L\' employé <strong>' . $_POST['nom'] . '</strong> a bien été enregistré !</div>';
+            echo "<pre>";
+            print_r($employe);
+            echo "</pre>";
+
+        
+
+        // afficher successivement les données de chaque employé avec une boucle foreach
+
+        foreach ($employe as $key => $tab) {
+            echo '<div class="col-md-4 offset-md-4 mx-auto alert alert-info text-center ">';
+            foreach ($tab as $key2 => $value) {
+                echo "$key2 : $value .<hr>";
+            }
+            echo '</div>';
+        }
+
+        // insertion via le fichier
+
+            // cette condition est mise pour ne permettre qu' un seul insert, sinon, a chaque rechargement de page, l' insert se répétera "betement".
+            $insert_bdd = $bdd->prepare("INSERT INTO annuaire (:nom, :prenom, :telephone, :profession, :ville, :codepostal, :adresse, :date_de_naissance, :sexe, :description) VALUES('Aribot', 'Yannis', '7896541023', 'web developpeur', 'Créteil', 94000, 'Pas loin de l' hosto', '1990-03-06', 'm', 'Hedgehog')");
+            echo "nombre d' enregistrement affecté(s) par l' INSERT : $resultat <br>";
+            echo "dernier ID généré : " . $bdd->lastInsertId() . '<hr>';
+            // lastInsertId va nous permettre d' afficher le dernier ID généré
+
+            $resultat = $pdo->exec("UPDATE employes SET salaire = 1300 WHERE id_employes = 350 ");
+            echo "nombre d' enregistrement affecté(s) par l' UPDATE : $resultat <br>";
+            // $resultat contient un integer. Il garde en mémoire le nombre de modifications. Mais on ne peut l' associer directement a exec ou query. Par contre on lm' appelle dans l' echo pour "déstocker" l' integer qu' il a en  mémoire dont on a besoin
+    
+            // DELETE supprimer employé 350
+    
+            $resultat = $pdo->exec("DELETE FROM employes WHERE id_employes = 350 ");
+            echo "nombre d' enregistrement affecté(s) par le DELETE : $resultat <br>";
+    
+            echo '<hr><h2 class="display-4 text-center">03. PDO : SELECT + FETCH_ASSOC (1 seul résultat)</h2><hr>';
+        
     }
 
 
     ?>
 
-    <form class="ml-2 mt-4 mb-4" method="post" action="">
+    <form class="mt-4 mb-4 ml-4" method="post" action="">
 
         <!-- le nom -->
         <div class="form-group col-md-2">
