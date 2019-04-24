@@ -1,0 +1,31 @@
+
+/* Theme Name: Portfolio   
+Theme URI: http://localhost/Back/wordpress-portfolio/wp-content/themes/portfolio
+Description: portfolio developpeur web
+Author: Aziz Tobbal
+Author URI: http://localhost/Back/wordpress-portfolio
+Version: 1.0 */
+body{
+    background: wheat;
+}
+h2 a:hover{
+    text-decoration: none;
+}
+/* .hauteur{
+    min-height: 150px;
+} */
+/* .h-entetes{
+    min-height: 200px;
+} */
+.ma-section{
+    min-height: 600px;
+}
+.menu ul li {
+    list-style-type: none !important;
+}
+.navbar-brand{
+    color: beige !important;
+}
+.menu ul li a{
+    color: beige !important;
+}

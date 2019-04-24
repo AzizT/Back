@@ -142,21 +142,21 @@
         // insertion via le fichier
 
             // cette condition est mise pour ne permettre qu' un seul insert, sinon, a chaque rechargement de page, l' insert se répétera "betement".
-            $insert_bdd = $bdd->prepare("INSERT INTO annuaire (:nom, :prenom, :telephone, :profession, :ville, :codepostal, :adresse, :date_de_naissance, :sexe, :description) VALUES('Aribot', 'Yannis', '7896541023', 'web developpeur', 'Créteil', 94000, 'Pas loin de l' hosto', '1990-03-06', 'm', 'Hedgehog')");
-            echo "nombre d' enregistrement affecté(s) par l' INSERT : $resultat <br>";
+            $insert_bdd = $bdd->exec("INSERT INTO annuaire (nom, prenom, telephone, profession, ville, codepostal, adresse, date_de_naissance, sexe, description) VALUES('Aribot', 'Yannis', '7896541023', 'web developpeur', 'Créteil', 94000, 'Pas loin de l hosto', '1990-03-06', 'm', 'Hedgehog')");
+            echo "nombre d' enregistrement affecté(s) par l' INSERT : $insert_bdd <br>";
             echo "dernier ID généré : " . $bdd->lastInsertId() . '<hr>';
             // lastInsertId va nous permettre d' afficher le dernier ID généré
 
-            $resultat = $pdo->exec("UPDATE employes SET salaire = 1300 WHERE id_employes = 350 ");
-            echo "nombre d' enregistrement affecté(s) par l' UPDATE : $resultat <br>";
+            // $insert_bdd = $bdd->exec("UPDATE employes SET salaire = 1300 WHERE id_employes = 350 ");
+            // echo "nombre d' enregistrement affecté(s) par l' UPDATE : $insert_bdd <br>";
             // $resultat contient un integer. Il garde en mémoire le nombre de modifications. Mais on ne peut l' associer directement a exec ou query. Par contre on lm' appelle dans l' echo pour "déstocker" l' integer qu' il a en  mémoire dont on a besoin
     
             // DELETE supprimer employé 350
     
-            $resultat = $pdo->exec("DELETE FROM employes WHERE id_employes = 350 ");
-            echo "nombre d' enregistrement affecté(s) par le DELETE : $resultat <br>";
+            // $insert_bdd = $bdd->exec("DELETE FROM employes WHERE id_employes = 350 ");
+            // echo "nombre d' enregistrement affecté(s) par le DELETE : $insert_bdd <br>";
     
-            echo '<hr><h2 class="display-4 text-center">03. PDO : SELECT + FETCH_ASSOC (1 seul résultat)</h2><hr>';
+            // echo '<hr><h2 class="display-4 text-center">03. PDO : SELECT + FETCH_ASSOC (1 seul résultat)</h2><hr>';
         
     }
 
