@@ -24,9 +24,13 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
 
-    <!-- mon cdn -->
+    <!-- mon css -->
     <link rel="stylesheet" href="<?php bloginfo('template_directory'); ?>/style.css">
     <!-- fonction WP qui remplace css(/style.css)... et retourne l' URL du theme portfolio -->
+
+    <!-- link googlefonts -->
+    <link href="https://fonts.googleapis.com/css?family=Satisfy" rel="stylesheet">
+
 </head>
 
 <body <?php body_class(); ?>>
@@ -36,18 +40,18 @@
 
         <div class="d-flex">
 
-            <div class="col-md-4 hauteur">
+            <div class="col-md-4 d-flex justify-content-around hauteur">
                 <?php dynamic_sidebar('Haut-gauche') ?>
-                <!-- cette fonction WP nouspermet de faire appel aux régions créees dans le fichier functions.php -->
+                <!-- cette fonction WP nous permet de faire appel aux régions créees dans le fichier functions.php -->
 
             </div>
 
-            <div class="col-md-4 hauteur">
+            <div class="col-md-4 d-flex justify-content-around hauteur">
                 <?php dynamic_sidebar('Haut-centre') ?>
 
             </div>
 
-            <div class="col-md-4 hauteur">
+            <div class="col-md-4 hauteurD">
                 <?php dynamic_sidebar('Haut-droite') ?>
 
             </div>
@@ -55,7 +59,7 @@
         </div>
 
         <nav class="navbar navbar-dark bg-dark">
-            
+
             <a class="navbar-brand" href="#"><?php bloginfo('name'); ?></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample01" aria-controls="navbarsExample01" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -64,21 +68,16 @@
             <div class="collapse navbar-collapse" id="navbarsExample01">
                 <ul class="navbar-nav mr-auto">
                     <?php wp_nav_menu(array('container_class' => 'menu_header', 'theme_location' => 'primary')) ?>
-            <!-- wp_nav_menu() est une fonction spécifique WP qui nouspermet d' importer le menu principal ( primary ) que l' on a crée dans le fichier function.php
+                    <!-- wp_nav_menu() est une fonction spécifique WP qui nouspermet d' importer le menu principal ( primary ) que l' on a crée dans le fichier function.php
             - container_class => menu_header veut dire que notre menu aura comme class menu_header
             - theme_location => primary permet de préciser que cela sera notre menu principal-->
-                    
+
                 </ul>
                 <form class="form-inline my-2 my-md-0">
                     <input class="form-control" type="text" placeholder="Search" aria-label="Search">
                 </form>
             </div>
         </nav>
-
-        <div class="col-md-12 px-0 bg-danger h-entetes">
-            <?php dynamic_sidebar('entete') ?>
-
-        </div>
 
     </div>
 

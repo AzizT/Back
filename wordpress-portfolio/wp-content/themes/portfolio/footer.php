@@ -1,23 +1,23 @@
 </section>
 <?php wp_footer(); ?>
 <!-- voir wp_header pour son utilité -->
-<footer>
+<footer class="mt-4">
 
     <div class="container-fluid px-0">
 
         <div class="d-flex">
 
-            <div class="col-md-4 bg-success hauteur">
+            <div class="col-md-4 hauteur">
                 <?php dynamic_sidebar('Bas-gauche') ?>
 
             </div>
 
-            <div class="col-md-4 bg-warning hauteur">
+            <div class="col-md-4 hauteurBc">
                 <?php dynamic_sidebar('Bas-centre') ?>
 
             </div>
 
-            <div class="col-md-4 bg-info hauteur">
+            <div class="col-md-4 hauteur">
                 <?php dynamic_sidebar('Bas-droite') ?>
 
             </div>

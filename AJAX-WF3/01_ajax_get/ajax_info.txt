@@ -1,0 +1,3 @@
+appelé ainsi a la base car utilisait du XML, mais aujourd' hui utilise plus du JSON (limite AJAJ au lieu d' AJAX)
+
+Salut, c' est la rentrée
