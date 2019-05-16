@@ -1,14 +1,19 @@
 $(document).ready(function () {
 
-    var id = $('#personne').val();
-    console.log(id);
+   $('#submit').click(function(event){
+       event.preventDefault();
+       ajax();
+  });
 
-    var parameters = "id=" + id;
-    console.log(parameters);
+  function ajax()
+  {
+      var id = $('#personne').val();
 
-    $.post("ajax5.php", parameters, function (data) {
-        $('#resultat').html(data.resultat);
-        // data.resultat est ce qui permet de reconnaitre $tab['resultat'] (du fichier.php) pour l' envoyer ensuite dans la div "#resultat" (index)
-    }, 'json');
+      var parameters = "id=" +id;
+
+      $.post("ajax5.php", parameters, function(data){
+          $('#resultat').html(data.resultat);
+      }, 'json');
+  }
 
 });
