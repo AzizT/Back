@@ -1,0 +1,48 @@
+Orienté objet
+
+1- Inconvénients:
+
+- Techniquement, on ne peut rien faire de plus avec l' orienté objet par rapoort au procédural.
+- L' approche est moins intuitive que le procédural, en regle générale
+- Légère perte de performance, compensable par ailleurs, améliorable par divers moyens d' optimisation.
+
+2- Avantages:
+
+- Modularisation afin d' avoir un code évolutif.
+- Encourager le travail collaboratif.
+- Masquer la compléxité du code grace au principe d' encapsulation.
+- Réutilisation du code, ne pas repartir de rien, de zéro. Effectuer un code type (générique) pouvant etre repris sur d' autres projets
+  (exemple type, avec des modules Wordpress, c' est ainsi que sont nés les frameworks).
+- Simplifier la maintenance, les mises a jour.
+- Assouplir, factoriser le code pour une meilleure conceptualisation.
+- Plus d' options dans le langage (héritage, surcharge, abstraction, finalisation etc...).
+- Se rapproche, et donc permettra d' aborder plus facilement d' autres langages/ technologies ( JAVA, .Net, C#, C++ etc...).
+
+Conclusion:
+
+Nous n' aurons pas besoin d' orienté objet pour un petit projet ( site e commerce fait avec Grégory, fait en procédural ), mais pour tous les projets d' envergures, réalisés avec des équipes de developpement, régulièrement mis a jour.
+
+3- Nouveautés:
+
+- Une classe est un regroupement d' informations, de données que 'l on peut comparer a un plan de construction.
+- Pour pouvoir utiliser des données declarées dans la classe, nous devons instancier la classe afinc d' en créer un objet, c' est a dire un        exemplaire de la classe.
+  L' objet permet d' atteindre et d' utiliser les fonctionnalités declarées dans la classe
+
+  Exemple avec la classe control_point_duplicate
+
+  class PDO
+  {
+      public function query(){}
+      public function prepare(){}
+      public funtion exec(){}
+  }
+
+  - Vocabulaire
+
+  Variable = propriété = attribut
+  Fonction = méthode
+  Instance = objet
+  Objet = application du plan
+
+  Une classe permet de contenir des variables, avec des informations, ainsi que des méthodes comportant des traitements
+  Une Class est un regroupement d' informations ( Plan, modèle )
