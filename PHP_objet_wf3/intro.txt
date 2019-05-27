@@ -42,6 +42,7 @@ Nous n' aurons pas besoin d' orienté objet pour un petit projet ( site e commer
   Variable = propriété = attribut
   Fonction = méthode
   Instance = objet
+  Instancier = créer un objet
   Objet = application du plan
 
   Une classe permet de contenir des variables, avec des informations, ainsi que des méthodes comportant des traitements
