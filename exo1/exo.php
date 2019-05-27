@@ -43,8 +43,9 @@ class Etudiant
     // ************************************
     public function setPrenom($prenom)
     {
-        if (!isset($_POST['prenom']) || strlen($_POST['prenom']) < 5 || strlen($_POST['prenom']) > 30) {
+        if (isset($prenom) || strlen($prenom) < 5 || strlen($prenom) > 30) {
             $this->prenom = $prenom;
+            return $this;
         } else {
             $this->error = "Le prenom doit comporter entre 5 et 30 caracteres";
             return $this->error;
