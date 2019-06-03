@@ -1,0 +1,87 @@
+Symfony:
+Intro: keskeu Symfony
+Etape 1 => installation de symfony 4.3
+Etape 2 => Les Bundles
+Etape 3 => Les routes et les controllers
+Etape 4 => Creer un site boutique avec Symfony
+Etape 5 => TWIG (moteur de template)
+Etape 6 => Les assets
+Etape 7 => Entités
+Etape 8 => Doctrine
+Etape 9 => Les formulaires
+Etape 10 => Validation des données
+Etape 11 => Securité et utilisateurs
+Etape 12 => Association Mapping
+Etape 13 => Installation et boutique sur SF 4.3
+Bonus => formulaire de contact
+
+Intro:
+**************************************************
+
+- Interet d' un Framework:
+
+    - Une organisation optimisée
+    - Fonctionnalités communes a tous les projets
+    - Services disponibles (Routing, Securité, BDD, Moteur de Template, Formulaire)
+    - Communauté active, grosse bibliotheque pour debuggage
+
+- Choix du Framework
+
+    - Le sien (pédagogique)
+    - Framework Fullstack (Symfony, Zend, Laravel, Cake)
+    - Les minis framework (Silex, Slim, Codelgniter, Lumen)
+
+- Le framework Symfony
+
+    - Framework français crée par Sensiolabs
+    - Différentes versions LTS ( long time support):
+          - 2.8
+          - 3.4 amélioration de la 2.8, plus souple, avec des Fonctionnalités
+          - 4.4 amélioration de la 3.4, mais bundeleLess, Flex, Encore (webpack), Maker, PHP 7.1
+
+nstallation de SF 3.4
+
+- installer Composer
+- installer SF 3.4
+- Arborescence des dossiers  et fichiers
+- Lancement de l' settings_applications
+
+1- Installer Composer
+
+Composer est un outil de dépendance. Il permet de télécharger et mettre a jour tous les outils (services, composants, dépendances) dont nous aurons besoin
+
+-DL: https://getcomposer.org/download/
+cliquer sur le lien composer-Setup.extension
+
+Installer: suivre les étapes
+
+2- Installer SF
+(doc symfony https://symfony.com/doc/current/index.html#gsc.tab=0)
+
+Aller dans le dossier Symfony
+Maj clic droit
+Ouvrir une fenetre powershell ici
+<cmd>Ligne de commande a ecrire
+composer create-project symfony/framework-standard-edition test
+
+Une fois terminé l' install, cliquer dix fois sur enter pour terminer l' install (bandeau vert qui apparait pour ok)
+A ce stade, un dossier test a été crée
+
+3- Arborescence des dossiers  et fichiers
+
+- app/
+     contient toute la configuration de l' app (bdd, securité, routes)
+- bin/
+     va contenir tous les executables de l' app ( de SF) 
+- src/
+     le dossier dans lequel on va coder notre MVC ( le plus important, celui dans lequel nous allons passer beaucoup de temps)
+- var/
+     Les fichiers ecrits par symfony au fur et a mesure ( on va y trouver le cache et les logs)
+- tests/
+     Les tests unitaires
+- web/
+     Repertoire web (app.php ou app_dev.php, img/css/js/fonts)
+- vendor/
+     Le coeur de SF (les fichiers codés par le studio de developpement)
+- composer.json
+     fichier qui contient la liste de toutes les dépendances dont on a besoin

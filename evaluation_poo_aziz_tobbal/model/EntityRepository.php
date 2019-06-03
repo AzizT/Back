@@ -12,15 +12,12 @@ class EntityRepository
             try
             {
                 $xml = simplexml_load_file('app/config.xml');
-                // echo '<pre>'; print_r($xml);echo '</pre>';
 
                 $this->table = $xml->table; // on associe de la table du fichier XML à la propriété '$table' de la classe, cette propriété nous servira pour toute nos requetes SQL (INSERT INTO $this->table)  
 
                 try
                 {
                     $this->db = new \PDO("mysql:dbname=" . $xml->db . ";host=" . $xml->host, $xml->user, $xml->password, array(\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION)); // connexion à la BDD, si jamais on chage de BDD, nous n'aurons pas besoin de modifier ce code, c'est un code généric, c'est le fichier config.xml que l'on mofifiera
-                    // echo '<pre>'; var_dump($this->db);echo '
-                    // </pre>';
                 }
                 catch(\PDOException $e) // on entre dans le 'catch' en cas de mauvaise connexion
                 {
@@ -35,7 +32,7 @@ class EntityRepository
         return $this->db; // on retourne la connexion
    }
    
-   public function selectAll() // méthode permettant de selectionner tout les employés
+   public function selectAll() // méthode permettant de selectionner tout les conducteurs
    {
        // $q = $bdd->query("SELECT * FROM employe");
        // $this->getDb() : représente un objet PDO donc une connexion à la BDD

@@ -1,0 +1,23 @@
+revision php objet:
+visibilité, autoload, namespace, interface
+
+MVC:
+
+Symfony:
+Intro: keskeu Symfony
+Etape 1 => installation de symfony 4.3
+Etape 2 => Les Bundles
+Etape 3 => Les routes et les controllers
+Etape 4 => Creer un site boutique avec Symfony
+Etape 5 => TWIG (moteur de template)
+Etape 6 => Les assets
+Etape 7 => Entités
+Etape 8 => Doctrine
+Etape 9 => Les formulaires
+Etape 10 => Validation des données
+Etape 11 => Securité et utilisateurs
+Etape 12 => Association Mapping
+Etape 13 => Installation et boutique sur SF 4.3
+Bonus => formulaire de contact
+
+LTS: Long Type Support

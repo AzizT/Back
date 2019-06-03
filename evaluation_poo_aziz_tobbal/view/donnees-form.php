@@ -1,6 +1,3 @@
-
-<?php echo'<pre>';print_r($values); echo '</pre>'?>
-
 <form method="post" class="col-md-6 offset-md-3 text-center">
 
     <?php foreach($fields as $value): ?>
