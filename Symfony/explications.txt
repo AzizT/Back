@@ -267,3 +267,18 @@ php bin/console server:run
 
 test : localhost:8000, a condition d' avoir fermé sa fenetre console de l' autre projet, sinon, il passe au port dispo suivant: 8001
 
+2 - Reorganiser de AppBundle
+
+localhost/               -> Produit/index.html.twig
+localhost/categorie/pull -> Produit/index.html.twig
+localhost/produit/12     -> Produit/show.html.twig
+
+Admin Controller :
+
+localhost/admin/produit/list/ 
+    -> Admin/list_produit.html.twig
+    Je suis dans la page qui liste les produits
+
+localhost/admin/produit/add/ 
+    -> Admin/form_produit.html.twig
+    Je suis dans le formulaire produit
