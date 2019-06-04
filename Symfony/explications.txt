@@ -39,7 +39,7 @@ Intro:
           - 3.4 amélioration de la 2.8, plus souple, avec des Fonctionnalités
           - 4.4 amélioration de la 3.4, mais bundeleLess, Flex, Encore (webpack), Maker, PHP 7.1
 
-nstallation de SF 3.4
+Installation de SF 3.4
 
 - installer Composer
 - installer SF 3.4
@@ -85,3 +85,97 @@ A ce stade, un dossier test a été crée
      Le coeur de SF (les fichiers codés par le studio de developpement)
 - composer.json
      fichier qui contient la liste de toutes les dépendances dont on a besoin
+
+4 - Lancement de l' application
+
+Méthode 1:
+localhost/back/symfony/test/web/app.php
+localhost/back/symfony/test/web/app_dev.php
+
+Methode 2
+on va dans le dossier test
+maj clic droit
+<cmd>
+php bin/console server:run localhost:8000
+puis taper
+localhost:8000
+dans la barre URL du navigateur
+
+Différence entre mode dev et prod
+localhost/Symfony/test/web/toto
+localhost:8000/toto
+
+A ce stade, notre appli affiche un message de bienvenue, RAS
+
+Etape 2: Les Bundles
+Sommaire:
+- Le concept des Bundles
+- Création du premier Bundles
+
+1 - le concept
+
+Les bundles sont des briques/modules de notre application
+
+UserBundle: => dossier
+     UserController (C) => fichier .php
+     UserModel (M) => fichier .php
+     View : inscription/connexion/profil... => fichier .php
+
+Avec la nouvelle version de symfony (4), il est préférable de créer un seul Bundle ( généralement appelé appBundle, aussi faisable sur la version 3)
+
+2 - Creation du premier Bundle
+
+On va créer un Bundle: POLES/TestBundle
+
+<cmd>
+php bin/console generate:bundle
+faire y ensuite pour yes
+<cmd>
+POLES/TestBundle
+puis triple Enter
+Puis taper annotation ( a la place de xml)
+=>création de plusieurs fichiers ( ne pas tenir compte du failed)
+
+Le Bundle a été crée mais il faut l' enregister dans composer.json
+
+Il faut ajouter
+"POLES\\": "src/POLES"
+en dessous de la ligne
+"autoload": {
+        "psr-4": {
+            "AppBundle\\": "src/AppBundle",
+            (ajouter une virgule a la fin)
+
+Retourner sur la concole pour faire un
+<cmd>
+composer update
+
+Notre bundle se localise dans src/POLES/TestBundle et il se compose de 4 dossiers:
+     - Controller
+          Tous les controllers du bundle
+     - DependencyInjection
+          Injection de dépendances
+     - Resources
+          Vues et Routes (YML) et éventuellement JS
+     - Test
+          Tests liés au fonctionnement du Bundle
+
+A ca stade le Bundle est fonctionnel, mais petite erreur dans le navigateur a corriger
+=> aller dans le dossier src/POLES/TestBundle/Controller/DefaultController.php
+et remplacer cette ligne
+return $this->render('POLESTestBundle:Default:index.html.twig');
+par celle ci
+return $this->render('@POLESTest/Default/index.html.twig');
+
+=> Désormais, erreur disparue et affichage du message Hello World
+
+Etape 3: Routes & controllers
+Sommaire:
+- Création de routes
+- L' objet Request
+- L' objet Response
+- Redirection
+- Message
+
+1 - Création de Routes
+
