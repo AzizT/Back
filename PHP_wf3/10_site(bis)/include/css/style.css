@@ -1,0 +1,35 @@
+.formulaire{
+    margin-bottom: 5rem;
+}
+.container{
+    margin-bottom: 10rem;
+}
+.titre_boutique{
+    font-family: 'bangers';
+    text-align: center;
+    color: grey;
+    text-shadow: 2px 2px 1px black;
+    font-size: 2rem;
+    letter-spacing: 0.2rem;
+}
+.carousel{
+    box-shadow: 2px 2px 10px black;
+}
+.categorie{
+    box-shadow: 2px 2px 5px black;
+    
+}
+.categorie a{
+    font-family: 'bangers';
+    font-size: 1.2rem;
+    letter-spacing: 0.2rem;
+    color: grey !important;
+    text-shadow: 2px 2px 1px black;
+    background-color: rgb(250, 248, 244) !important;
+}
+.card{
+    box-shadow: 2px 2px 5px black;
+}
+.fiche_individuelle{
+    margin-bottom: 5rem !important;
+}

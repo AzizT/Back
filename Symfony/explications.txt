@@ -178,4 +178,92 @@ Sommaire:
 - Message
 
 1 - Création de Routes
+("/") -> route simple homepage
+    ("/bonjour/") -> route echo (erreur)
+    ("/bonjour2/") -> route response
+    ("/hello/{prenom}") -> route response + param URL
+    ("/hola/{prenom}") -> route render de vue (html.twig) + param URL
+    ("/ciao/{prenom}/{age}") -> route render de vue + 2 params URL
+    ("/redirect/") -> route avec redirection (RedirectResponse)
+    ("/redirect2/") -> route avec redirection (redirectToRoute())
+    ("/message/") -> route avec redirect et message en session
+
+
+2/ L'objet Request 
+	<code>
+	use Symfony\Component\HttpFoundation\Request;
+
+	Correspond à la partie requete de la requête HTTP. 
+
+	<code>
+	$session = $request -> getSession(); 
+	-> récupère la session ($_SESSION)
+
+	Autres exemples : 
+	<code>
+	$session -> set('prenom', 'Yakine');
+	echo $session -> get('prenom'); 
+
+	Autre méthode :
+	<code>
+	$request -> session -> set('prenom', 'Yakine'); 
+
+	
+	Autres utilités de $request : 
+	<code>
+	$request -> query -> get('argument_url');
+	$request -> request -> get('champs_form');
+	$request -> cookies -> get('cookie');
+	$request -> server -> get('server');
+3 - L' objet Response
+
+Correspond a la partie réponse de la requete http
+
+<code>
+use Symfony\Component\HttpFoundation\Response;
+
+Toute action/fonction attend une réponse obligatoire
+Même la fonction render est une réponse
+
+return $this -> render();
+return $this -> getTemplating() -> renderResponse
+Ces deux lignes sont similaires, plutot privilégier la première comme elle est plus courte
+
+4 - Redirection
+
+Premiere Méthode
+
+<code>
+use Symfony\Component\HttpFoundation\RedirectResponse;
+
+cf route ....."/redirect/" et "/redirect2/"
+
+A ce stade, toutes nos routes doivent avoir un name
+
+5 - Message
+
+$session -> getFlashBag() -> add();
+
+=> nous permet d' enregistrer des messages qui seront disponibles dans d' autres pages ( messages de' félicitations ou d' erreur)
+
+app.session => permet en TWIG de récupérer les messagers les infos en session
+app.user => nous permet, toujours en twig, de récupérer les infos de l' utilisateur actuellement connecté
+
+Etape 4: création du site Boutique sur SF
+
+Sommaire:
+
+- creation du projets
+- reorganiser le appbundle
+- creation des premieres routes
+
+1 - creation du projet
+
+Dans le dossier symfony, maj clic droit
+composer create-project symfony/framework-standard-edition Boutique3
+cd Boutique3
+
+php bin/console server:run
+
+test : localhost:8000, a condition d' avoir fermé sa fenetre console de l' autre projet, sinon, il passe au port dispo suivant: 8001
 

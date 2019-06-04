@@ -1,1 +1,21 @@
+<html>
+<head>
+{# link bootstrap #}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+{# {{ dump(app.session) }} #}
+
+{% for message in app.session.flashbag.get('success')%}
+<div class="alert alert-success">{{ message }}</div> <br>
+{% endfor %}
+
+{% for message in app.session.flashbag.get('error')%}
+<div class="alert alert-warning">{{ message }}</div> <br>
+{% endfor %}
+{# pour recharger la page et voir les alert, il faut lancer dans l' URL
+localhost:8000/message/ #}
+
 Hello World!
+</body>
+</html>
