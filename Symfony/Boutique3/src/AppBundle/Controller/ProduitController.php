@@ -41,25 +41,5 @@ class ProduitController extends Controller
         return $this -> render('@/Produit/index.html.twig', $params);
     }
 
-    /**
-     * @Route("/liste/{list}", name="liste")
-     * www.maboutique.com/liste/...
-     */
-
-    public function listAction($list)
-    {
-        $params = array();
-        return $this -> render('@/Admin/list_produit.html.twig', $params);
-    }
-
-    /**
-     * @Route("/formulaire/{form}", name="formulaire")
-     * www.maboutique.com/formulaire/...
-     */
-
-    public function formAction($form)
-    {
-        $params = array();
-        return $this -> render('@/Admin/form_produit.html.twig', $params);
-    }
+    
 }

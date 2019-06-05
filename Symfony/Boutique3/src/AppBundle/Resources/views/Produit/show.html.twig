@@ -1,1 +1,8 @@
-= je suis dans la page du n° {{ id }}
+{% extends 'layout.html.twig' %}
+
+{% block title %}Boutique - Produit {{ id }}{% endblock %}
+
+
+{% block content %}
+ je suis dans la page du n° {{ id }}
+ {% endblock %}

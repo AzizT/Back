@@ -282,3 +282,108 @@ localhost/admin/produit/list/
 localhost/admin/produit/add/ 
     -> Admin/form_produit.html.twig
     Je suis dans le formulaire produit
+
+2 - Réorganiser le AppBundle
+
+Création de tous nos controllers
+ - AdminController
+ - MembreController
+ - CommandeController
+ - ProduitController
+
+Création de nos Vues
+ - Admin/ => list_produit, form_produit etc...
+ - Membre/ => connexion, inscription, profil
+ - Commande/ => panier, transport, livraison, paiement
+ - Produit => home, categorie, boutique, fiche_produit
+
+3 - Création des premières routes
+
+ - ProduitController : "/", "/produit/{id}/", etc...
+ - AdminController : "/admin/produit/", "/admin/membre/" etc...
+
+ Etape 5 => TWIG (moteur de template)
+
+ Sommaire:
+- Création de Layout
+- L' héritage de TWIG
+- Modification de nos Vues
+- Documentation TWIG
+
+ TWIG est le moteur de template de symfony. Un moteur de template (tel que tpl, smarty, blade...) permet d' afficher du php dans les vues html de manière plus simple
+
+     exemple:
+     <?= $membre['prenom'] ?>
+     {{ membre.prenom }}
+
+1 - Création du Layout
+Chemin : Boutique3/app/Resources/views/layout.html.twig
+
+Un layout est une structure de page dans laquelle on peut ajouter du contenu, des éléments. Son concept permet d' avoir plusieurs structures de pages pour un même site (ex, front vs backoffice)
+A partir d' une seule page html.twig, on pourra la modeler différemment selon l' interface demandée
+
+2 - héritage de twig
+Avec twig, on parle d' héritage car nos views héritent d' un layout (extends) et peuvent contenir de 'l html qui va donc modifier a l' endroit qui leur est imparti, l' aspect de ce layout. Un peu, ou totalement si on le désire
+De manière générale, il faut voir le fonctionnement de twig et de la methode render comme un chargement du contenu de manière "empilée", a la manière de poupées russes
+Render temporise (mémoire tampon) le contenu et affiche en même temps: layout, le view et les params
+
+3 - Modification de nos views
+
+<code>
+
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+Je suis dans le profil membre
+{% endblock %}
+
+                                             /!\   ATTENTION  /!\
+
+Quand on utilise l' héritage twig, nos views ne peuvent contenir de l' html qu' a l' interieur des blocks prévus a cet effet
+
+4 - Docu TWIG
+https://twig.symfony.com/doc/2.x/
+Permet de formater ( dates, les décimales et milliers, les formulaires/securité etc...)
+
+a ce stade, notre application permet d' afficher les pages accueil, inscription, connexion, profil, boutique, produit, categorie, gestion membre, gestion produit et gestion commande
+
+ Par contre, nous ne sommes pas encore capables de nous connecter avec la bdd (ajouter contenu, ou le récupérer). Il faut voir les entity et Doctrine
+
+ ETAPE 6 ASSETS
+
+ ETAPE 7 Entités
+
+ Sommaire:
+ - Doctrine ORM et le concept des entités (Entity)
+ - Créer Entité Produit
+ - Annotations (mapping)
+ - Mettre a jour la bdd
+ - Générer les Entity en ligne de commande
+ - Générer la bdd via les Entity
+ - Générer les Entity via la BDD
+
+ 1 - DOCTRINE ORM et le concept des Entity
+
+ D' une certaine manière, les entités correspondent a la partie model de notre MVC
+ C' est la relation avec notre BDD, mais sous forme PHP et non SQL
+
+ ORM => Object Relation Mapping
+ Théoriquement, nous n' avons plus besoin de sql ( mais on peut l' utiliser si on veut)
+ Désormais, nous ne manipulerons plus des tables mais des objets
+ Npus allons créer nos entités sous forme de class php (POPO) qui vont permettre a DOCTRINE de comprendre notre BDD et de la manipulerons
+
+ Par exemple pour faire INSERT INTO Produit, nous ferons désormais
+
+ $produit = new Produit;
+ persist($produit); //pour une insert
+ remove($produit); //pour une suppression
+ createForm($produit); //pour créer un formulaire
+
+ // pour que cela soit possible, il faut expliquer a DOCTRINE quelle relation existe entre la BDD et nos Entity
+
+ 2 - créer Entity Produit
+
+ - créer le dossier Entity/ dans appBundell
+ - créer le fichier Produit.php
+ - créer class produit + propriétés + setters et getters
+
