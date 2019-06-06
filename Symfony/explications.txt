@@ -387,3 +387,100 @@ a ce stade, notre application permet d' afficher les pages accueil, inscription,
  - créer le fichier Produit.php
  - créer class produit + propriétés + setters et getters
 
+ 3 - Annotations mapping
+
+ - Avec Doctrine ORM, on parametre le mapping via les annotations
+
+ <code>
+ use Doctrine\ORM\Mapping as ORM;
+ //ORM est a choisir, mais n' est pas obligatoire en terme de syntaxe
+ CF le fichier Produit.php
+
+liens:
+Basic mapping
+ https://www.doctrine-project.org/projects/doctrine-orm/en/2.6/reference/basic-mapping.html
+
+Association mapping
+ https://www.doctrine-project.org/projects/doctrine-orm/en/2.6/reference/association-mapping.html
+
+
+4 - Mettre a jour la bdd
+
+     <cmd>
+     php bin/console doctrine:schema:update --dump-sql
+     => voir la requete
+
+     php bin/console doctrine:schema:update --force
+     => execute les modifs en bdd
+     => permet aussi de créer une bdd a partir de nos entités
+
+5 - Générer les entites en ligne de commande
+- On doit connecter notre App a la bdd
+     app/Config/parameters.yml
+
+     Modifier:
+      - database_host: localhost
+      - database_port: 3306
+      - database_name: boutique
+      - database_password: 
+
+-<cmd>
+php bin/console doctrine:generate:entity
+AppBundle:Membre
+
+     - On suit les étapes, avec modifs au cas ou ( length varchar ou integer)
+     - Cela crée le fichier entity/membre.php en qlq lignes de commandes => gros gain de tps et d' erreurs en moins
+     ( setter/getter etc...)
+
+6 - Générer la bdd via les entités
+
+     On peut créer la bdd depuis les entités dejà codées
+
+     php bin/console doctrine:schema:update --force
+     => execute les modifs en bdd
+     Par contre il faut que la bdd existe déjà
+
+7 - Générer les entités depuis la BDD
+
+- on peut créer les entités depusi la bdd
+<cmd>
+php bin/console doctrine:mapping:import AppBundle\Entity annotation --path=src/AppBundle/Entity
+
+=> Cette commande nous a permis de générer les entités depuis les tables de la bdd
+Par contre elle ne génère ni les repository ni les getters et setters
+
+=> il faut ajouter dans chaque fichier Entity crée ( apres Table name=commande)
+(repositoryClass="AppBundle\Repository\ProduitRepository")
+(repositoryClass="AppBundle\Repository\CommandeRepository")
+(repositoryClass="AppBundle\Repository\DetailsCommandeRepository")
+(repositoryClass="AppBundle\Repository\MembreRepository")
+
+<cmd>
+php bin/console doctrine:generate:entities AppBundle
+
+=> cela nosu crée nos getters et setters et genere les repositories
+
+Etape 8
+
+Sommaire:
+- le service doctrine
+- acceder au service doctrine depuis les controllers
+- requetes select * from ...
+- requetes select * from ...where id = ...
+- requetes select * from ...where ... = ...
+- requetes insert / update
+- requetes delete
+- Create query et query builder
+
+1 - Le service Doctrine
+ Il fait deux choses:
+
+ - ORM ( object relation mapping) permet de relier les tables de notre bdd a nos entités.
+ Nous n' allons plus manipuler la bdd mais des objets ( table produit devient entity produit )
+
+ 2 - Doctrine DBAL ( DataBase Abstract Layer)
+ Le dbal est une couche qui passe au-dessus de Produit
+ A partir de maintenant, nous ne faisons plus de requetes sql mais nous manipulons du php
+ => le dbal va nouspermettre de faire des select, insert, update, delete non plus via du sql mais par le biais du php. On parle désormais de DQL (Doctrine Query language)
+
+ => plus de sql, ou presque

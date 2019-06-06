@@ -6,88 +6,110 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Produit
- * 
- * @ORM\Table(name="Produit")
- * //correspond a la table produit dans la bdd
- * 
- * @ORM\Entity()
- * //signifie que cette classe est une entité
- * 
+ *
+ * @ORM\Table(name="produit")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ProduitRepository")
  */
-
 class Produit
 {
     /**
-     * 
-     * @ORM\Column(name="id_produit", type="integer", length=5,nullable=false)
-     * //les normes, tel que Integer
-     * @ORM\id
-     * //clé primaire
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * // auto-incrémentation
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
     /**
-     * 
+     * @var string
+     *
      * @ORM\Column(name="reference", type="string", length=20, nullable=false)
      */
     private $reference;
 
     /**
-     * 
+     * @var string
+     *
      * @ORM\Column(name="categorie", type="string", length=20, nullable=false)
      */
     private $categorie;
+
     /**
-     * 
+     * @var string
+     *
      * @ORM\Column(name="title", type="string", length=100, nullable=false)
      */
-    private $titre;
+    private $title;
+
     /**
-     * 
-     * @ORM\Column(name="description", type="text", nullable=false)
+     * @var string
+     *
+     * @ORM\Column(name="description", type="text", length=65535, nullable=false)
      */
     private $description;
+
     /**
-     * 
+     * @var string
+     *
      * @ORM\Column(name="couleur", type="string", length=20, nullable=false)
      */
     private $couleur;
+
     /**
-     * 
+     * @var string
+     *
      * @ORM\Column(name="taille", type="string", length=5, nullable=false)
      */
     private $taille;
+
     /**
-     * 
+     * @var string
+     *
      * @ORM\Column(name="public", type="string", length=5, nullable=false)
      */
     private $public;
+
     /**
-     * 
+     * @var string
+     *
      * @ORM\Column(name="photo", type="string", length=255, nullable=false)
      */
     private $photo;
+
     /**
-     * 
-     * @ORM\Column(name="prix", type="float", length=5,nullable=false)
+     * @var float
+     *
+     * @ORM\Column(name="prix", type="float", precision=10, scale=0, nullable=false)
      */
     private $prix;
+
     /**
-     * 
+     * @var integer
+     *
      * @ORM\Column(name="stock", type="integer", nullable=false)
      */
     private $stock;
 
 
 
+    /**
+     * Get id
+     *
+     * @return integer
+     */
     public function getId()
     {
         return $this->id;
     }
 
-
+    /**
+     * Set reference
+     *
+     * @param string $reference
+     *
+     * @return Produit
+     */
     public function setReference($reference)
     {
         $this->reference = $reference;
@@ -95,11 +117,23 @@ class Produit
         return $this;
     }
 
+    /**
+     * Get reference
+     *
+     * @return string
+     */
     public function getReference()
     {
         return $this->reference;
     }
 
+    /**
+     * Set categorie
+     *
+     * @param string $categorie
+     *
+     * @return Produit
+     */
     public function setCategorie($categorie)
     {
         $this->categorie = $categorie;
@@ -107,24 +141,47 @@ class Produit
         return $this;
     }
 
+    /**
+     * Get categorie
+     *
+     * @return string
+     */
     public function getCategorie()
     {
         return $this->categorie;
     }
 
-
-    public function setTitre($titre)
+    /**
+     * Set title
+     *
+     * @param string $title
+     *
+     * @return Produit
+     */
+    public function setTitle($title)
     {
-        $this->titre = $titre;
+        $this->title = $title;
 
         return $this;
     }
 
-    public function getTitre()
+    /**
+     * Get title
+     *
+     * @return string
+     */
+    public function getTitle()
     {
-        return $this->titre;
+        return $this->title;
     }
 
+    /**
+     * Set description
+     *
+     * @param string $description
+     *
+     * @return Produit
+     */
     public function setDescription($description)
     {
         $this->description = $description;
@@ -132,11 +189,23 @@ class Produit
         return $this;
     }
 
+    /**
+     * Get description
+     *
+     * @return string
+     */
     public function getDescription()
     {
         return $this->description;
     }
 
+    /**
+     * Set couleur
+     *
+     * @param string $couleur
+     *
+     * @return Produit
+     */
     public function setCouleur($couleur)
     {
         $this->couleur = $couleur;
@@ -144,11 +213,23 @@ class Produit
         return $this;
     }
 
+    /**
+     * Get couleur
+     *
+     * @return string
+     */
     public function getCouleur()
     {
         return $this->couleur;
     }
 
+    /**
+     * Set taille
+     *
+     * @param string $taille
+     *
+     * @return Produit
+     */
     public function setTaille($taille)
     {
         $this->taille = $taille;
@@ -156,11 +237,23 @@ class Produit
         return $this;
     }
 
+    /**
+     * Get taille
+     *
+     * @return string
+     */
     public function getTaille()
     {
         return $this->taille;
     }
 
+    /**
+     * Set public
+     *
+     * @param string $public
+     *
+     * @return Produit
+     */
     public function setPublic($public)
     {
         $this->public = $public;
@@ -168,11 +261,23 @@ class Produit
         return $this;
     }
 
+    /**
+     * Get public
+     *
+     * @return string
+     */
     public function getPublic()
     {
         return $this->public;
     }
 
+    /**
+     * Set photo
+     *
+     * @param string $photo
+     *
+     * @return Produit
+     */
     public function setPhoto($photo)
     {
         $this->photo = $photo;
@@ -180,11 +285,23 @@ class Produit
         return $this;
     }
 
+    /**
+     * Get photo
+     *
+     * @return string
+     */
     public function getPhoto()
     {
         return $this->photo;
     }
 
+    /**
+     * Set prix
+     *
+     * @param float $prix
+     *
+     * @return Produit
+     */
     public function setPrix($prix)
     {
         $this->prix = $prix;
@@ -192,11 +309,23 @@ class Produit
         return $this;
     }
 
+    /**
+     * Get prix
+     *
+     * @return float
+     */
     public function getPrix()
     {
         return $this->prix;
     }
 
+    /**
+     * Set stock
+     *
+     * @param integer $stock
+     *
+     * @return Produit
+     */
     public function setStock($stock)
     {
         $this->stock = $stock;
@@ -204,6 +333,11 @@ class Produit
         return $this;
     }
 
+    /**
+     * Get stock
+     *
+     * @return integer
+     */
     public function getStock()
     {
         return $this->stock;

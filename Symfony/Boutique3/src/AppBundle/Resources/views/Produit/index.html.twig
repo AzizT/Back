@@ -3,5 +3,45 @@
 {% block title %}Boutique - Accueil{% endblock %}
 
 {% block content %}
-je suis dans la page d' accueil
+{# {{ dump(produits) }} #}
+
+<div  class="row col-lg-12 p-5">
+
+    <div class="col-lg-3">
+	
+	</div>
+
+
+	<!-- Espace principal  -->
+
+    
+
+	<div class="col-lg-9">
+
+		<div class="row">
+
+
+        {% for pdt in produits %}
+			<!-- Debut Vignette Produit -->
+			<div class="col-lg-4 col-md-6 mb-4">
+				<div class="card h-100">
+					<a href=""><img class="card-img-top" src="" alt=""></a>
+					<div class="card-body">
+					<h4 class="card-title text-center">
+						<a href="" class="alert-link text-dark">{{ pdt.title }}</a>
+					</h4>
+					<h5 class="text-center">{{ pdt.prix }}</h5>
+					<p class="card-text text-center">{{ pdt.description }}</p>
+					</div>
+					<div class="card-footer text-center">
+					<a href="" class="alert-link text-dark">Voir le détail&nbsp;&nbsp;<i class="fas fa-search"></i></a>
+					</div>
+				</div>
+			</div>
+			<!-- Fin Vignette Produit -->
+		{% endfor %}
+		</div>
+	</div>
+
+</div>
 {% endblock %}

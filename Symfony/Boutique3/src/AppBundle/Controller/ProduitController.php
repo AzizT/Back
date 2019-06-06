@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use AppBundle\Entity\Produit;
 
 class ProduitController extends Controller
 {
@@ -13,7 +14,15 @@ class ProduitController extends Controller
      */
     public function indexAction()
     {
-        $params = array();
+        // 1 recuperer les infos
+
+        $repo = $this ->getDoctrine() -> getRepository(Produit::class);
+        $produits = $repo -> findAll();
+
+        // 2 retourner une vue
+        $params = array(
+            'produits' => $produits
+        );
         return $this->render('@App/Produit/index.html.twig', $params);
     }
 
