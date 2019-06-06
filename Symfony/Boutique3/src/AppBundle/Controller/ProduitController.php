@@ -33,8 +33,19 @@ class ProduitController extends Controller
 
      public function produitAction($id)
      {
+
+        // methode 1 => repository
+        // $repo = $this-> getDoctrine()->getRepository(Produit::class);
+        // $produit = $repo->find($id);
+
+        // methode 2 => entityManager
+        $em = $this -> getDoctrine()-> getManager();
+        $produit = $em->find(Produit::class, $id);
+
+
         $params = array(
-            'id' => $id
+            'id' => $id,
+            'produit' => $produit
         );
         return $this -> render('@App/Produit/show.html.twig', $params);
      }

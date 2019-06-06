@@ -484,3 +484,40 @@ Sommaire:
  => le dbal va nouspermettre de faire des select, insert, update, delete non plus via du sql mais par le biais du php. On parle désormais de DQL (Doctrine Query language)
 
  => plus de sql, ou presque
+
+- Acceder au service doctrine depuis les controllers
+
+   A - Il faut pouvoir manipuler les entités dont on a besoin
+   <code>
+   use AppBundle\EntityProduit
+
+   B - Acceder au Repository dans un Controller
+   <code>
+   $repo = $this-> getDoctrine()->getRepository(Produit::class);
+
+   C - Acceder au Manager ( qui peut faire des requetes dans toutes les tables)
+   <code>
+   $em = $this -> getDoctrine()-> getManager();
+
+- Requetes Select * from
+
+     Depuis le repository
+     $repo = $this-> getDoctrine()->getRepository(Produit::class);
+     $produit = $repo->findAll();
+
+- requetes select * from ...where id = ...
+
+     Depuis le repository
+     $repo = $this-> getDoctrine()->getRepository(Produit::class);
+     $produit = $repo->find($id);
+
+     Depuis le manager
+     $em = $this -> getDoctrine()-> getManager();
+     $produit = $em->find(Produit::class, $id);
+
+- requetes select * from ...where ... = ...
+- requetes insert / update
+- requetes delete
+- Create query et query builder
+
+
