@@ -57,9 +57,20 @@ class ProduitController extends Controller
 
     public function categorieAction($cat)
     {
-        $params = array();
-        return $this -> render('@/Produit/index.html.twig', $params);
+        $repo = $this->getDoctrine()->getRepository(Produit::class);
+        $produits = $repo->findBy(array('categorie' => $cat));
+
+        $params = array(
+            'produits' => $produits
+        );
+        return $this -> render( '@App/Produit/index.html.twig', $params);
     }
+
+    /*
+    test: localhost:8000/categorie/pull
+    test: localhost:8000/categorie/chemise
+    test: localhost:8000/categorie/tee-shirt
+    */
 
     
 }

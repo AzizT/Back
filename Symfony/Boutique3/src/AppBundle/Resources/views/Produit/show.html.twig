@@ -15,8 +15,10 @@
 		<div class="card-body text-center">
 		<h4 class="card-title text-center">
 			<a href="" class="alert-link text-info">{{ produit.title | upper }}</a>
+            {# doc twig upper sert a tout mettre en majuscule #}
 		</h4><hr>
 		<h5 class="text-center">{{ produit.prix | number_format (2, ',', ' ')}} €</h5><hr>
+            {# doc twig pour mettre un nombre a virgule au format français #}
 		<p class="card-text text-center">{{ produit.description }} </p><hr>
 		<p class="card-text text-center">{{ produit.taille }}</p><hr>
 		<p class="card-text text-center">
@@ -28,6 +30,7 @@
         {% else %}
         <p>Mixte</p>
         {% endif %}
+        {# doc twig pour un boucle if #}
         
         
         
@@ -46,6 +49,7 @@
         {% for i in 1..5 if i<= produit.stock %}
         <option>Commander {{ i }} article(s)</option>
         {% endfor %}
+        {# boucle pour créer un selecteur, qui s' arrete automatiquement a 5, sinon moins si article < a 5 #}
 
                 {# <option>Commander 1 article</option>
                 <option>Commander 2 articles</option>
