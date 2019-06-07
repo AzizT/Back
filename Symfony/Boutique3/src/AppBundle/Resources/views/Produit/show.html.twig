@@ -10,7 +10,9 @@
 	<div class="col-lg-6 col-md-12 mx-auto form1">
 	<div class="card h-100">
 	   
-		<a href=""><img class="card-img-top" src="" alt=""></a>
+		<a href=""><img class="card-img-top" src="{{ asset('photo/' ~ produit.photo )}}" alt=""></a>
+        {# pour appeler l' image que l'on vient de cliquer #}
+        {# ici, ce n' est plus pdt.photo mais produit.photo. pdt nous servait dans une boucle avant, mais ici ce n'est plus le cas. Il génère désormais une erreur #}
 	   
 		<div class="card-body text-center">
 		<h4 class="card-title text-center">
@@ -36,7 +38,7 @@
         
         </p><hr>
 		<p class="card-text text-center">{{ produit.couleur }}</p><hr>
-		<a href=">" class="alert-link text-dark card-text"><i class="fas fa-angle-double-left"></i>&nbsp;&nbsp;retour vers la catégorie PULL</a>
+		<a href="{{ path('categorie', {'cat' : produit.categorie} ) }}" class="alert-link text-dark card-text"><i class="fas fa-angle-double-left"></i>&nbsp;&nbsp;retour vers la catégorie {{ produit.categorie }}</a>
 		</div>
 
         <div class="card-footer text-center">

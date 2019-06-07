@@ -11,7 +11,8 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
     <!-- Lien de notre fichier style CSS -->
-    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    {# asset permet de pointer vers le dossier web, dans tous les cas, et derrière SF comprend que il doit chercher le css dans web #}
 
     <title>{% block title %}Boutique {% endblock %}</title>
   </head>

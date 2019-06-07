@@ -2,6 +2,8 @@
 
 namespace AppBundle\Repository;
 
+use AppBundle\Entity\Produit;
+
 /**
  * ProduitRepository
  *
@@ -10,4 +12,30 @@ namespace AppBundle\Repository;
  */
 class ProduitRepository extends \Doctrine\ORM\EntityRepository
 {
+
+// query builder
+    public function getAllCategories(){
+
+            $em = $this -> getEntityManager();
+            $query = $em ->createQueryBuilder();
+            $query
+                ->select('p.categorie')
+                ->distinct(true)
+                ->from(Produit::class, 'p')
+                ->orderBy('p.categorie', 'ASC');
+
+            // SELECT DISTINCT(categorie) FROM produit ORDER BY categorie ASC
+            return $query->getQuery()->getResult();
+    }
+
+    
+    // create query
+    public function getAllCategories2()
+    {
+        $em = $this-> getEntityManager();
+        $query = $em->createQuery("SELECT DISTINCT(p.categorie) FROM AppBundle\Entity\Produit p ORDER BY p.categorie ASC");
+
+        return  $query->getResult();
+    }
+    
 }

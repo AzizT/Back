@@ -19,9 +19,33 @@ class ProduitController extends Controller
         $repo = $this ->getDoctrine() -> getRepository(Produit::class);
         $produits = $repo -> findAll();
 
+            // 1.2 on récupere aussi les categories
+
+            // methode create query
+
+                $em = $this -> getDoctrine() -> getManager();
+                $query = $em -> createQuery( "SELECT DISTINCT(p.categorie) FROM AppBundle\Entity\Produit p ORDER BY p.categorie ASC");
+                // on utilise p.categorie par rapport au DQL ( syntaxe similaire a un alias de jointure, mais si ici pas ded jointure) et ensuite le AppBundle car on on manipule un objet et non pas un array
+                $categories = $query -> getResult();
+                // equivalent du FetchAssoc
+
+            // methode query builder
+
+                $query = $em -> createQueryBuilder();
+                $query
+                    -> select('p.categorie')
+                    -> distinct(true)
+                    -> from(Produit::class, 'p')
+                    -> orderBy('p.categorie', 'ASC');
+
+                // SELECT DISTINCT(categorie) FROM produit ORDER BY categorie ASC
+                $categories = $query ->getQuery() -> getResult();
+
+        
         // 2 retourner une vue
         $params = array(
-            'produits' => $produits
+            'produits' => $produits,
+            'categories' => $categories
         );
         return $this->render('@App/Produit/index.html.twig', $params);
     }
@@ -60,8 +84,10 @@ class ProduitController extends Controller
         $repo = $this->getDoctrine()->getRepository(Produit::class);
         $produits = $repo->findBy(array('categorie' => $cat));
 
+        $categories = $repo -> getAllCategories();
         $params = array(
-            'produits' => $produits
+            'produits' => $produits,
+            'categories' => $categories
         );
         return $this -> render( '@App/Produit/index.html.twig', $params);
     }

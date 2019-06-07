@@ -4,11 +4,17 @@
 
 {% block content %}
 {# {{ dump(produits) }} #}
+{# {{ dump(categories) }} #}
 
 <div  class="row col-lg-12 p-5">
 
     <div class="col-lg-3">
-	
+		<div class="list-group mb-4">
+			<a href ="" class="text text-light bg-dark list-group-item">Tous les produits</a>
+			{% for cat in categories %}
+				<a href ="{{ path('categorie', {'cat' : cat.categorie} ) }}" class="text-dark list-group-item">{{ cat.categorie }}</a>
+			{% endfor %}
+		</div>
 	</div>
 
 
@@ -25,7 +31,13 @@
 			<!-- Debut Vignette Produit -->
 			<div class="col-lg-4 col-md-6 mb-4">
 				<div class="card h-100">
-					<a href=""><img class="card-img-top" src="" alt=""></a>
+
+
+					<a href="{{ path('produit', {'id': pdt.id } ) }}"><img class="card-img-top" src="{{ asset('photo/' ~ pdt.photo )}}" alt=""></a>
+					{# path + json permet de relier notre photo (qui devient cliquable) a notre produit individuel #}
+					{# ~ permet de concatener avec twig #}
+
+
 					<div class="card-body">
 					<h4 class="card-title text-center">
 						<a href="" class="alert-link text-dark">{{ pdt.title }}</a>

@@ -351,6 +351,56 @@ a ce stade, notre application permet d' afficher les pages accueil, inscription,
 
  ETAPE 6 ASSETS
 
+ Sommaire:
+ - Modification de fichier composer.json
+ - Mise a jour de l' application
+ - Dossier Web/ (photo, css, js etc...)
+ - Modification des vues
+
+ 1  - Modification de fichier composer.json
+
+          Modification du composer.json
+
+          ajouter cette ligne dans le "require", tout a la fin
+
+          "symfony/asset": "^3.4"
+
+2 - Mise a jour de l' application
+
+          composer update dans la console
+
+3 - Dossier Web/ (photo, css, js etc...)
+
+          Dans le dossier web, il faut créer trois dossiers
+          - photo
+          - css
+          - js
+
+4 - Modification des vues
+
+          avec le asset, qui dirige automatiquement et seulement ( dans la syntaxe SF) vers le dossier web, il suffit d' ecrire:
+          <link rel="stylesheet" href="{{ asset('css/style.css') }}"> pour que SF comprenne ou il doit chercher le dossier css
+
+          href="inscription.php"
+          => href="{{ path('inscription') }}"
+
+          La fonction asset() de twig nouspermet de charger une ressource
+          La fonction path() nous permet de creer un lien vers une page (route)
+
+// liens dynamiques avec un asset
+src="{{ asset('photo/' ~ pdt.photo ) }}"
+
+href="{{ path('produit', { 'id': pdt.id }) }}"
+          - produit => nom de la route
+          Dans un array .json
+          - id => parametre dynamique de la route
+          - pdt.id => valeur du parametre dynamique(l' objet repéré grace a son id)
+
+<a href ="{{ path('categorie', {'cat' : cat.categorie} ) }}" class="text-dark list-group-item">{{ cat.categorie }}</a>
+          - categorie => nom de la route
+          - cat => parametre dynamique de la route
+          - cat.categorie => valeur du parametre dynamique
+
  ETAPE 7 Entités
 
  Sommaire:
@@ -516,8 +566,102 @@ Sommaire:
      $produit = $em->find(Produit::class, $id);
 
 - requetes select * from ...where ... = ...
+
+La fonction findBy va nous permettre de récuperer des données de manière plus ciblée
+
+$repo = $this->getDoctrine()->getRepository(Produit::class);
+$produits = $repo->findBy(array('categorie' => $cat));
+$produits = $repo->findBy(array('taille' => 'L'));
+//pour avoir tout ce qui est en taille LT
+
+$produits = $repo->findBy(array(
+     'categorie' => 'tee-shirt',
+     'taille' => 'L'
+));
+=
+SELECT * FROM produit WHERE taille = 'L' AND categorie = 'tee-shirt'
+
+$produits = $repo->findBy(['couleur' => 'rouge'], ['prix' => 'DESC'], 0, 10);
+Si on met array, on garde les parentheses. Si on met des crochets, c' est sans
+
+$produits = $repo->findOneBy(array('taille' => 'L'));
+=
+SELECT * FROM produit WHERE taille = 'L' LIMIT 0,1
+
 - requetes insert / update
+
+Avec Doctrine on manipule des objets (entités)
+
+     Enregistrement
+     - on crée un objet vide
+     - on hydrate l' objet ( normalement via un formulaire)
+     - on persist et on flush
+
+                              $produit = new Produit;
+                              // on crée, on instancie un nouvel objet, vide
+
+                              $produit->setReference('XXX');
+                              $produit->setCategorie('pull');
+                              $produit->setPublic('m');
+                              $produit->setPrix('25.99');
+                              $produit->setStock('150');
+                              $produit->setTitle('Pull marinière');
+                              $produit->setPhoto('mariniers.jpg');
+                              $produit->setDescription('Super Pull façon bretonne');
+                              $produit->setTaille('L');
+                              $produit->setCouleur('blanc et bleu');
+
+                              $em = $this->getDoctrine()->getManager();
+                              // on récupere le manager =>
+                              $em->persist($produit);
+                              // on enregistre dans le systeme objet
+                              $em->flush();
+
+     Update
+     C' est la même logique que pour le add, a ceci pret que cette foisl' objet a manipuler n' est pas vide a la base. On doit donc récuperer l' objet a modifier ( avec find())
+
+                              $em = $this -> getDoctrine() -> getManager();
+                              $produit = $em -> find(Produit::class, $id);
+                              // je recupere le produit a modifier, grace a sopn id
+
+                              $produit -> setPrix('1000');
+                              // je le modifie
+
+                              $em -> persist($produit);
+                              $em -> flush();
+                              // je l' enregistre puis execute vers la bdd
+
 - requetes delete
+
+Même logique que ci dessus, même méthode, on récupere pour ensuite supprimer
+
+                              $em = $this->getDoctrine()->getManager();
+                              $produit = $em->find(Produit::class, $id);
+                              // je recupere le produit a modifier, grace a sopn id
+
+                              $em -> remove($produit);
+                              $em -> flush();
+                              // le delete puis son execution
+
 - Create query et query builder
+
+Pour effectuer des requetes spécifiques, nous avons deux possibilités
+
+-create Query (SQL)
+-Query Builder (PHP)
+
+=>cf ProduitRepository
+
+Dans l' objectidf de factoriser notre code, nous créons nos requetes spécifiques dans le Repository, afin de les utiliser de manière simple dans les controllers
+
+=> cf ProduitController, route/categorie/ et la focntion getAllCategories() declarée dans le ProduitRepository
+
+Liens:
+
+Query Builder:
+ https://www.doctrine-project.org/projects/doctrine-orm/en/2.6/reference/query-builder.html
+	
+Create Query : 
+https://www.doctrine-project.org/projects/doctrine-orm/en/2.6/reference/dql-doctrine-query-language.html
 
 
