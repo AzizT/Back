@@ -11,6 +11,8 @@ use AppBundle\Entity\Membre;
 use AppBundle\Entity\Commande;
 use AppBundle\Entity\DetailCommande;
 
+use AppBundle\Form\ProduitType;
+
 class AdminController extends Controller
 {
     /**
@@ -32,37 +34,58 @@ class AdminController extends Controller
     }
 
     /**
-     * @Route("/admin/produit/add", name="admin_produit_add")
+     * @Route("/admin/produit/add/", name="admin_produit_add")
      * www.maboutique.com/admin/formulaire/...
      */
 
-    public function adminProduitAddAction()
+    public function adminProduitAddAction(Request $request)
     {  
          $produit = new Produit;
         // on crée, on instancie un nouvel objet, vide
 
-        $produit->setReference('XXX');
-        $produit->setCategorie('pull');
-        $produit->setPublic('m');
-        $produit->setPrix('25.99');
-        $produit->setStock('150');
-        $produit->setTitle('Pull marinière');
-        $produit->setPhoto('mariniers.jpg');
-        $produit->setDescription('Super Pull façon bretonne');
-        $produit->setTaille('L');
-        $produit->setCouleur('blanc et bleu');
+        // $produit->setReference('XXX');
+        // $produit->setCategorie('pull');
+        // $produit->setPublic('m');
+        // $produit->setPrix('25.99');
+        // $produit->setStock('150');
+        // $produit->setTitle('Pull marinière');
+        // $produit->setPhoto('mariniers.jpg');
+        // $produit->setDescription('Super Pull façon bretonne');
+        // $produit->setTaille('L');
+        // $produit->setCouleur('blanc et bleu');
 
-        $em = $this->getDoctrine()->getManager();
-        // on récupere le manager =>
-        $em->persist($produit);
-        // on enregistre dans le systeme objet
-        $em->flush();
-        // on execute l' enregistrement avec flush
+        $form = $this -> createForm(
+            ProduitType::class, $produit
+        );
+        // on crée un formulaire de type produit, et on le lie a notre objet $produit
+        // On dit que le formualire va hydrater l' objet ( les infos du formulaire vont remplir l' objet
+
+        $form -> handleRequest($request);
+        // lier l' objet $produit au formulaire. Permet de traiter les infos en Post
+
+        if ($form -> isSubmitted()  && $form -> isValid())
+        {
+            $em = $this->getDoctrine()->getManager();
+            // on récupere le manager =>
+            $em->persist($produit);
+            // on enregistre dans le systeme objet
+            $em->flush();
+            // on execute l' enregistrement avec flush
+
+            $request -> getSession() -> getFlashBag() -> add('success', ' le produit ' . $produit -> getId() . ' a bien été ajouté');
+
+            return $this->redirectToRoute('admin_produit');
+        }
+
+        
 
         // test: localhost:8000/admin/produit/add
         // test: localhost:8000
 
-        $params = array();
+        $params = array(
+            'produitForm' => $form -> createView()
+            // createView() permet de générer la partie visuelle (HTML) du formulaire
+        );
         return $this->render('@App/Admin/form_produit.html.twig', $params);
     }
 
@@ -71,22 +94,34 @@ class AdminController extends Controller
      * www.maboutique.com/admin/formulaire/...
      */
 
-    public function adminProduitUpdateAction($id)
+    public function adminProduitUpdateAction($id, Request $request)
     {
         $em = $this -> getDoctrine() -> getManager();
         $produit = $em -> find(Produit::class, $id);
         // je recupere le produit a modifier, grace a sopn id
 
-        $produit -> setPrix('1000');
-        // je le modifie
+        $form = $this -> createForm(ProduitType::class, $produit);
 
-        $em -> persist($produit);
+        $form -> handleRequest($request);
+
+        if($form -> isSubmitted() && $form -> isValid())
+        {
+            $em -> persist($produit);
         $em -> flush();
         // je l' enregistre puis execute vers la bdd
 
+        $request -> getSession() -> getFlashBag() -> add('success', 'Le produit ' . $produit -> getTitle() . ' a bien été modifié');
+
+        return $this -> redirectToRoute('admin_produit'); 
+        }
+
+        
+
 
         $params = array(
-            'id' => $id
+            'id' => $id,
+            'produitForm' => $form -> createView(),
+            'title' => 'Modifier produit ' . $produit -> getTitle()
         );
         return $this->render('@App/Admin/form_produit.html.twig', $params);
     }
