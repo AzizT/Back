@@ -25,24 +25,48 @@ class MembreType extends AbstractType
             'required' => false,
             'constraints' => array(
                 new Assert\Length(array(
-                        'min' => 3,
-                        'minMessage' => 'Vous devez ecrire trois caracteres minimum',
-                        'max' => 20,
-                        'maxMessage' => 'Vous devez ecrire vingt caracteres maximum',
+                        'min' => 5,
+                        'minMessage' => 'Le code postal doit comporter cinq chiffres',
+                        'max' => 5,
+                        'maxMessage' => 'Le code postal doit comporter cinq chiffres',
                 ))
 
             )
         ))
         ->add( 'username', TextType::class, array(
             'required' => false,
+            'constraints' => array(
+                new Assert\Length(array(
+                    'min' => 3,
+                    'minMessage' => 'Votre pseudo doit comporter 3 caracteres minimum',
+                    'max' => 20,
+                    'maxMessage' => 'Votre pseudo doit comporter 20 caracteres maximum',
+                )),
+            )
         ))
         ->add( 'nom', TextType::class, array(
             'required' => false,
+            'constraints' => array(
+                new Assert\Length(array(
+                    'min' => 3,
+                    'minMessage' => 'Votre nom doit comporter 3 caracteres minimum',
+                    'max' => 20,
+                    'maxMessage' => 'Votre nom doit comporter 20 caracteres maximum',
+                )),
+            )
         ))
         ->add( 'prenom', TextType::class, array(
             'required' => false,
+            'constraints' => array(
+                new Assert\Length(array(
+                    'min' => 3,
+                    'minMessage' => 'Votre prenom doit comporter 3 caracteres minimum',
+                    'max' => 20,
+                    'maxMessage' => 'Votre prenom doit comporter 20 caracteres maximum',
+                )),
+            )
         ))
-        ->add('email')
+        ->add('email', EmailType::class)
         ->add( 'civilite', ChoiceType::class, array(
             'choices' => array(
                 'Homme' => 'm',
@@ -51,14 +75,30 @@ class MembreType extends AbstractType
         ))
         ->add( 'ville', TextType::class, array(
             'required' => false,
+            'constraints' => array(
+                new Assert\Length(array(
+                    'min' => 3,
+                    'minMessage' => 'La ville doit comporter 3 caracteres minimum',
+                    'max' => 20,
+                    'maxMessage' => 'La ville doit comporter 20 caracteres maximum',
+                )),
+            )
         ))
         ->add( 'adresse', TextType::class, array(
             'required' => false,
+            'constraints' => array(
+                new Assert\Length(array(
+                    'min' => 5,
+                    'minMessage' => 'Votre adresse doit comporter 5 caracteres minimum',
+                    'max' => 50,
+                    'maxMessage' => 'Votre adresse doit comporter 50 caracteres maximum',
+                )),
+            )
         ))
         ->add( 'statut', IntegerType::class, array(
             'required' => false,
         ))
-        ->add('password')
+        ->add('password', PasswordType::class)
 
         ->add('Enregistrer', SubmitType::class, array(
             'attr' => array(
