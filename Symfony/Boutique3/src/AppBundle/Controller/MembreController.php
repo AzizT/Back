@@ -33,7 +33,7 @@ class MembreController extends Controller
         $request -> getSession() -> getFlashBag() -> add('success', $membre -> getNom() . ' vous avez réussi votre inscription !');
         // message de validation
 
-        return $this -> redirectToRoute('connexion_membre');
+        return $this -> redirectToRoute('connexion');
         // redirection 
         }
 
