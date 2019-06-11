@@ -665,3 +665,96 @@ Create Query :
 https://www.doctrine-project.org/projects/doctrine-orm/en/2.6/reference/dql-doctrine-query-language.html
 
 
+Etape 9; les formulaires
+sommaire:
+- le fonctionnement des formulaires
+- générer les formulaires
+- récupérer les données du formulaire
+- personnaliser un formulaire avec Bootstrap
+- update un formulaire
+- Validation des données
+- champs file
+
+1 - le fonctionnement des formulaires
+
+De la même manière que nous ne manipulons plus d' enregistrements en bdd, mais des objets (entity), chaque formulaire va etre lié a une entités
+=> un formulaire est lié a un objet
+
+inscription _> objet membre
+ajout de produit -> objet produit
+modif de produit -> objet produit
+
+Un formulaire est généré grace a une classe (type -> produit entity)
+Chaque champs de formulaire correspond a une classe; service de SF. Cela permet de générer tous les controles sur les formulaires
+
+2 - Générer les formulaires
+
+php bin/console generate:doctrine:form AppBundle:Produit
+Cela crée un dossier form dans notre bundle et un fichierProduitType.php, qui contient la construction du formulaire
+
+3 - Récupérer les données du formulaire
+
+     - Générer le form dans la route
+
+          use AppBundle\Form\ProduitType;
+          +
+          $form = $this -> createForm(ProduitType::class, $produit);
+
+     - Afficher la vue du formulaire dans la vue
+
+          On envoie le formulaire a la vue via les params
+                    $params = array(
+                    'id' => $id,
+                    'produitForm' => $form -> createView(),
+               );
+          
+          On affiche le formulaire
+
+
+     - récupérer les données saisies
+
+          $form -> handleRequest($request);
+          Cette ligne est importante pour pouvoir récupérer les données en POST
+
+     - Checker la validité du form et traiter les données (enregistrement)
+
+     if($form -> isSubmitted() && $form -> isValid())
+        {
+            $em -> persist($produit);
+        $em -> flush();
+        // je l' enregistre puis execute vers la bdd
+
+        $request -> getSession() -> getFlashBag() -> add('success', 'Le produit ' . $produit -> getTitle() . ' a bien été modifié');
+        // message de validation
+
+        return $this -> redirectToRoute('admin_produit');
+        // redirection 
+        }
+
+4 - personnaliser le formulaire avec BS
+
+Dans
+app/config/config.yml
+
+twig:
+
+    form_themes:
+        - 'bootstrap_4_layout.html.twig'
+
+********************Attention***************************
+Bien respecter l' indentation, sinon ne fonctionne pas
+********************************************************
+
+5 - - update un formulaire
+
+6 - validation des données
+
+Faire inscription
+- Entity Membre
+- Controller : MembreController => route"/inscription"
+- Formulaire (MembreType) -> console
+- route: Créer le formulaire et sa vue
+- la vue : afficher le formulaire
+- route: recuperer les infos du formulaire et enregistrer le membre
+
+Attention: étant donné que le champs statut existe dans notre bdd, le formulaire va etre crée avec le champs statut, or, ce n' est pas au membre de choisir son statut
