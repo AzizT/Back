@@ -46,6 +46,8 @@ security:
                 target: homepage
 
     access_control:
+        - { path: ^/connexion, allow_if: "not has_role('ROLE_USER')" }
+        - { path: ^/connexion, allow_if: "not has_role('ROLE_USER')" }
         - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/profil, roles: ROLE_USER }
         - { path: ^/admin/stats, roles: ROLE_SUPER_ADMIN }
