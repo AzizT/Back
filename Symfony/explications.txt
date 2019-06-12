@@ -758,3 +758,57 @@ Faire inscription
 - route: recuperer les infos du formulaire et enregistrer le membre
 
 Attention: étant donné que le champs statut existe dans notre bdd, le formulaire va etre crée avec le champs statut, or, ce n' est pas au membre de choisir son statut
+
+Le formulaire généré par SF est basique.
+Il faut absolument modifier le fichier pour gérer les contraintes et la sécurité (form/ProduitType.php, ou MembreType etc...)
+
+7 - champs file
+
+Pour la gestion des photos, il faut:
+
+     - enregistrer le nom de la photo dans la bdd
+     - enregistrer la photo (data) dans le serveur
+     (cf différentes fonctions crées dans entity produit)
+
+     ********************ATTENTION******************
+
+dans notre formulaire d' ajout/ modification, désormais nous n' avons plus un champs 'photo', mais un champs file qui nous permet d' uploader un fichier
+
+Pour aller plus loin avec les formulaires et SF
+https://symfony.com/doc/current/reference/forms/types.html
+Pour les asserts
+https://symfony.com/doc/current/validation.html
+
+Etape 11 association mapping
+
+Etape 12 securite et utilisateurs
+sommaire:
+- niveau de sécurité
+- fichier de sécurité
+- creation des routes
+- classe membre (extends userInterface)
+- Layout
+
+1 - niveau de sécurité
+
+De base, symfony va considerer un visiteur lambda comme un anonyme
+
+     On va définir des niveaux de securité pour chaque utilisateur connecté
+          - role_user
+          - role_admin
+          - role_super_admin
+
+     SF a un systeme de pare-feu
+          - on définit les routes que les roles peuvent emprunter
+          => si un user essaye d' aller sur la homepage => ok
+          => ""         ""               "" la connexion => pas ok => connexion
+          => ""         connecté essaye d' aller sur profil = ok
+          => ""         connecté essaye d' aller sur admin/produit = pas ok => redirection error 404 pour tromper le user
+
+
+2 - fichier de sécurité
+
+
+- creation des routes
+- classe membre (extends userInterface)
+- Layout

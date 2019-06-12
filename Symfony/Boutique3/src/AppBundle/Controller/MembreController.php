@@ -43,14 +43,8 @@ class MembreController extends Controller
         return $this->render('@App/Membre/inscription_membre.html.twig', $params);
     }
 
-    /**
-     * @Route("/membre/connexion/", name="membre_connexion")
-     */
-    public function connexionMembreAction()
-    {
-        $params = array();
-        return $this->render('@App/Membre/connexion_membre.html.twig', $params);
-    }
+    
+    
     /**
      * @Route("/membre/profil/", name="membre_profil")
      */

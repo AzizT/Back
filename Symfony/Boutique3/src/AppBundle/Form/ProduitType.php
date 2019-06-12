@@ -10,6 +10,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
@@ -73,7 +74,9 @@ class ProduitType extends AbstractType
                         'Homme et Femme ' => 'mixte',
                     )
                 ))
-                ->add( 'photo', TextType::class)
+                ->add( 'file', FileType:: class, array(
+                    'required' => false,
+                ))
                 ->add( 'prix', MoneyType::class)
                 ->add( 'stock', IntegerType::class, array(
                     'required' => false,

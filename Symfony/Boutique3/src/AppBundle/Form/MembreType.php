@@ -8,6 +8,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
@@ -21,7 +23,7 @@ class MembreType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        ->add('codepostal', IntegerType::class, array(
+        ->add('codepostal', TextType::class, array(
             'required' => false,
             'constraints' => array(
                 new Assert\Length(array(
@@ -29,7 +31,11 @@ class MembreType extends AbstractType
                         'minMessage' => 'Le code postal doit comporter cinq chiffres',
                         'max' => 5,
                         'maxMessage' => 'Le code postal doit comporter cinq chiffres',
-                ))
+                )),
+                new Assert\Regex(array(
+                            'pattern' => '/^[0-9][5]+$/',
+                            'message' => 'Le code postal doit comporter cinq chiffres'
+                        ))
 
             )
         ))
@@ -95,7 +101,7 @@ class MembreType extends AbstractType
                 )),
             )
         ))
-        ->add( 'statut', IntegerType::class, array(
+        ->add( 'statut', TextType::class, array(
             'required' => false,
         ))
         ->add('password', PasswordType::class)

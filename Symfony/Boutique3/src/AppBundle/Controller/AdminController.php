@@ -67,7 +67,10 @@ class AdminController extends Controller
         {
             $em = $this->getDoctrine()->getManager();
             // on récupere le manager =>
+
+            
             $em->persist($produit);
+            $produit->uploadPhoto();
             // on enregistre dans le systeme objet
             $em->flush();
             // on execute l' enregistrement avec flush
@@ -83,7 +86,7 @@ class AdminController extends Controller
         // test: localhost:8000
 
         $params = array(
-            'produitForm' => $form -> createView()
+            'produitForm' => $form -> createView(),
             // createView() permet de générer la partie visuelle (HTML) du formulaire
         );
         return $this->render('@App/Admin/form_produit.html.twig', $params);
@@ -107,7 +110,8 @@ class AdminController extends Controller
         if($form -> isSubmitted() && $form -> isValid())
         {
             $em -> persist($produit);
-        $em -> flush();
+            $produit->uploadPhoto();
+            $em -> flush();
         // je l' enregistre puis execute vers la bdd
 
         $request -> getSession() -> getFlashBag() -> add('success', 'Le produit ' . $produit -> getTitle() . ' a bien été modifié');
@@ -121,6 +125,7 @@ class AdminController extends Controller
         $params = array(
             'id' => $id,
             'produitForm' => $form -> createView(),
+            'photo' => $produit->getPhoto(),
             'title' => 'Modifier produit ' . $produit -> getTitle()
         );
         return $this->render('@App/Admin/form_produit.html.twig', $params);
@@ -139,6 +144,7 @@ class AdminController extends Controller
         $produit = $em->find(Produit::class, $id);
         // je recupere le produit a modifier, grace a sopn id
 
+        $produit -> removeProduit();
         $em -> remove($produit);
         $em -> flush();
         // le delete puis son execution
