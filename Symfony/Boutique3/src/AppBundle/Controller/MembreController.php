@@ -9,12 +9,14 @@ use Symfony\Component\Routing\Annotation\Route;
 use AppBundle\Entity\Membre;
 use AppBundle\Form\MembreType;
 
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+
 class MembreController extends Controller
 {
     /**
      * @Route("/membre/inscription/", name="membre_inscription")
      */
-    public function inscriptionMembreAction(Request $request)
+    public function inscriptionMembreAction(Request $request, UserPasswordEncoderInterface $encoder)
     {
 
         $membre = new Membre;
@@ -26,7 +28,22 @@ class MembreController extends Controller
 
         if($form -> isSubmitted() && $form -> isValid())
         {
+            $em = $this ->getDoctrine() -> getManager();
+
             $em -> persist($membre);
+            $membre ->setStatut('0');
+
+            $password = $membre -> getPassword();
+            // password saisi dans le formulaire
+
+            $password_crypte = $encoder -> encodePassword($membre, $password);
+
+            $membre -> setPassword($password_crypte);
+            // cryptage du password
+
+            $membre -> setSalt(NULL);
+            $membre -> setRoles(['ROLE_USER']);
+
         $em -> flush();
         // je l' enregistre puis execute vers la bdd
 

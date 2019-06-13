@@ -162,7 +162,13 @@ class AdminController extends Controller
 
     public function adminMembreAction()
     {
-        $params = array();
+
+        $repo = $this -> getDoctrine() -> getRepository(Membre::class);
+        $membres = $repo -> findAll();
+
+        $params = array(
+            'membres' => $membres
+        );
         return $this->render('@App/Admin/list_membre.html.twig', $params);
     }
 
@@ -182,10 +188,27 @@ class AdminController extends Controller
      * www.maboutique.com/admin/
      */
 
-    public function adminMembreUpdateAction($id)
+    public function adminMembreUpdateAction($id, Request $request)
     {
+
+        $em = $this -> getDoctrine() -> getManager();
+        $membre = $em -> find(Membre::class, $id);
+        $form = $this -> createForm(MembreType::class, $membre, ['statut' => 'admin']);
+        $password = $membre -> getPassword();
+        if($form -> isSubmitted() && $form -> isValid())
+        {
+            $em -> persist($membre);
+            $membre -> setPassword($password);
+            $em -> flush();
+
+            $request -> getSession() -> getFlashBag() -> add('success', 'Le profil du membre' . $id . 'a bien été mis a jour !');
+
+            return $this->redirectToRoute('admin_membre');
+        }
+
         $params = array(
-            'id' => $id
+            'id' => $id,
+            'membreForm' => $form -> createView()
         );
         return $this->render('@App/Admin/form_membre.html.twig', $params);
     }
@@ -206,12 +229,18 @@ class AdminController extends Controller
 
     /**
      * @Route("/admin/commande/", name="admin_commande")
-     * www.maboutique.com/admin/
+     * www.maboutique.com/admin/commande/
      */
 
     public function adminCommandeAction()
     {
-        $params = array();
+
+        $repo = $this ->getDoctrine() -> getRepository(Commande::class);
+        $commandes = $repo -> findAll();
+
+        $params = array(
+            'commandes' => $commandes
+        );
         return $this->render('@App/Admin/list_commande.html.twig', $params);
     }
 

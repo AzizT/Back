@@ -33,7 +33,7 @@ class MembreType extends AbstractType
                         'maxMessage' => 'Le code postal doit comporter cinq chiffres',
                 )),
                 new Assert\Regex(array(
-                            'pattern' => '/^[0-9][5]+$/',
+                            'pattern' => '/^[0-9]{5,5}+$/',
                             'message' => 'Le code postal doit comporter cinq chiffres'
                         ))
 
@@ -101,16 +101,27 @@ class MembreType extends AbstractType
                 )),
             )
         ))
-        ->add( 'statut', TextType::class, array(
-            'required' => false,
-        ))
-        ->add('password', PasswordType::class)
+        
 
         ->add('Enregistrer', SubmitType::class, array(
             'attr' => array(
                 'class' => 'btn btn-warning'
             )
-        ));
+        ))
+        ->add('inscription', SubmitType::class, array());
+
+        if($options['statut'] == 'admin')
+        {
+            $builder
+                ->add('roles');
+        }
+        else
+        {
+            $builder
+            ->add('password', PasswordType::class, array(
+                'required' => false,
+            ));
+        }
     }
     
     /**
@@ -119,7 +130,8 @@ class MembreType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Membre'
+            'data_class' => 'AppBundle\Entity\Membre',
+            'statut' => 'user'
         ));
     }
 
